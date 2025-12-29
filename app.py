@@ -37,17 +37,17 @@ def calculate_risk(age, sex, ethnicity, sbp, smoker, diabetes, gender_enhancers,
     else: return risk_pct, "red", "HIGH"
 
 # --- UI LAYOUT ---
+st.image("attached_assets/Gemini_Generated_Image_fa87vfa87vfa87vf_1767032834009.png", width=200)
+st.markdown("""
+    <div style="background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%); padding: 20px; border-radius: 12px; margin: 10px 0; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        <h2 style="color: #ffffff; margin: 0; font-size: 1.5em; font-weight: 600; letter-spacing: 0.5px;">Doorstep Cardiac Screening & Specialist Referral</h2>
+        <p style="color: #f5a623; margin: 10px 0 0 0; font-size: 1.1em; font-weight: 500;">Invented by Sai Keerthana Cherukuri, 4th Year Medical Student</p>
+    </div>
+""", unsafe_allow_html=True)
+
 tab1, tab2 = st.tabs(["🏥 Step 1: Doorstep Triage", "📊 Step 2: Clinician's Dashboard"])
 
 with tab1:
-    st.image("attached_assets/Gemini_Generated_Image_fa87vfa87vfa87vf_1767032834009.png", width=200)
-    st.markdown("""
-        <div style="background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%); padding: 20px; border-radius: 12px; margin: 10px 0; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-            <h2 style="color: #ffffff; margin: 0; font-size: 1.5em; font-weight: 600; letter-spacing: 0.5px;">Doorstep Cardiac Screening & Specialist Referral</h2>
-            <p style="color: #f5a623; margin: 10px 0 0 0; font-size: 1.1em; font-weight: 500;">Invented by Sai Keerthana Cherukuri, 4th Year Medical Student</p>
-        </div>
-    """, unsafe_allow_html=True)
-    
     with st.container():
         col_a, col_b = st.columns([1, 2])
         
@@ -130,7 +130,6 @@ with tab1:
                 """, unsafe_allow_html=True)
 
 with tab2:
-    st.image("attached_assets/Gemini_Generated_Image_fa87vfa87vfa87vf_1767032834009.png", width=150)
     st.header("📈 Mobile Clinic Session Summary")
     
     if st.session_state['patient_log']:
