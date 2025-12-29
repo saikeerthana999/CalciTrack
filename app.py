@@ -50,6 +50,13 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
+# --- SIDEBAR: Personal Profile ---
+with st.sidebar:
+    st.header("❤️ Personal Profile")
+    motivation = st.selectbox("I want to stay healthy for...", ["My Family", "My Children's Future", "My Work", "Religious Pilgrimage"])
+    diet = st.radio("Dietary Habit", ["Pure Veg", "Non-Veg", "Eggetarian"])
+    sleep_apnea = st.checkbox("Heavy Snoring / Daytime Sleepiness")
+
 tab1, tab2 = st.tabs(["🏥 Step 1: Doorstep Triage", "📊 Step 2: Clinician's Dashboard"])
 
 with tab1:
@@ -111,6 +118,11 @@ with tab1:
                 
                 st.subheader("📝 Clinical Impression")
                 st.code(note, language=None)
+                
+                # Personal Goal Display
+                st.write(f"### 🎯 Your Goal: To stay healthy for **{motivation}**")
+                if sleep_apnea:
+                    st.warning("⚠️ Note: Your snoring may be linked to heart strain. Discuss 'Sleep Apnea' with your doctor.")
                 
                 # Save to Dashboard
                 st.session_state['patient_log'].append({
