@@ -214,9 +214,13 @@ with tab1:
             diabetes = st.checkbox("Diabetes", value=demo_data.get('diabetes', False) if demo_data else False)
             
             # --- ADVANCED CLINICAL MODULE ---
-            with st.expander("🔬 Advanced Precision Markers (Optional)"):
-                lpa_value = st.number_input("Lp(a) level (mg/dL) - Genetic Marker", 0, 300, value=0)
-                hscrp_value = st.number_input("hs-CRP (mg/L) - Inflammation Marker", 0.0, 20.0, value=0.0, step=0.1)
+            st.write("---")
+            st.markdown("##### 🔬 Advanced Precision Markers")
+            col_lpa, col_hscrp = st.columns(2)
+            with col_lpa:
+                lpa_value = st.number_input("Lp(a) (mg/dL)", 0, 300, value=0, help="Genetic marker - values >50 may upgrade risk")
+            with col_hscrp:
+                hscrp_value = st.number_input("hs-CRP (mg/L)", 0.0, 20.0, value=0.0, step=0.1, help="Inflammation marker - values >2.0 may upgrade risk")
 
             submit = st.button("Generate Result", use_container_width=True)
 
@@ -269,16 +273,22 @@ with tab1:
                 potential_v_age = calculate_vascular_age(age, sex, 120, False, False)
                 years_to_save = max(0, current_v_age - potential_v_age)
                 
-                if years_to_save > 0:
-                    st.subheader("🔮 What-If Analysis")
-                    st.success(f"**If you optimize BP to 120, quit smoking, and manage diabetes:**")
-                    col_w1, col_w2, col_w3 = st.columns(3)
-                    with col_w1:
-                        st.metric("Current Vascular Age", f"{current_v_age} Yrs")
-                    with col_w2:
-                        st.metric("Potential Vascular Age", f"{potential_v_age} Yrs")
-                    with col_w3:
+                st.markdown("""
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 12px; margin: 20px 0;">
+                        <h3 style="color: white; margin: 0 0 10px 0; text-align: center;">🔮 What-If Analysis: Your Potential</h3>
+                        <p style="color: #e0e0e0; text-align: center; margin-bottom: 15px;">If you optimize BP to 120, quit smoking, and manage diabetes:</p>
+                    </div>
+                """, unsafe_allow_html=True)
+                col_w1, col_w2, col_w3 = st.columns(3)
+                with col_w1:
+                    st.metric("Current Vascular Age", f"{current_v_age} Yrs")
+                with col_w2:
+                    st.metric("Potential Vascular Age", f"{potential_v_age} Yrs")
+                with col_w3:
+                    if years_to_save > 0:
                         st.metric("Life Years to Gain", f"{years_to_save} Yrs", delta=f"+{years_to_save}")
+                    else:
+                        st.metric("Life Years to Gain", "0 Yrs", delta="Optimal!")
                 
                 # Personal Goal Display
                 st.write(f"### 🎯 Your Goal: To stay healthy for **{motivation}**")
