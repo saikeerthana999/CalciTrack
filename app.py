@@ -119,8 +119,24 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# --- SIDEBAR: Personal Profile ---
+# --- MOCK DATASET ENGINE ---
+demo_cases = {
+    "None (Manual Entry)": None,
+    "Case 1: Young Male Smoker": {"age": 42, "sex": "Male", "sbp": 135, "smoker": True, "diabetes": False, "f_hx": False},
+    "Case 2: Female Post-Preeclampsia (GDM)": {"age": 48, "sex": "Female", "sbp": 128, "smoker": False, "diabetes": True, "pre_e": True, "gdm": True, "pcos": False, "early_m": False, "f_hx": False},
+    "Case 3: Young Genetic Risk (Asian)": {"age": 35, "sex": "Male", "sbp": 145, "smoker": False, "diabetes": False, "f_hx": True},
+    "Case 4: Diabetic Male": {"age": 55, "sex": "Male", "sbp": 138, "smoker": False, "diabetes": True, "f_hx": False},
+    "Case 5: Multiple Female Enhancers": {"age": 46, "sex": "Female", "sbp": 124, "smoker": False, "diabetes": False, "pre_e": True, "gdm": False, "pcos": False, "early_m": True, "f_hx": False},
+}
+
+# --- SIDEBAR ---
 with st.sidebar:
+    st.header("🧪 Demo Mode")
+    selected_demo = st.selectbox("Select a Mock Patient Profile", list(demo_cases.keys()))
+    demo_data = demo_cases[selected_demo]
+    
+    st.divider()
+    
     st.header("❤️ Personal Profile")
     motivation = st.selectbox("I want to stay healthy for...", ["My Family", "My Children's Future", "My Work", "Religious Pilgrimage"])
     diet = st.radio("Dietary Habit", ["Pure Veg", "Non-Veg", "Eggetarian"])
@@ -136,31 +152,33 @@ with tab1:
             st.subheader("📋 Intake")
             patient_name = st.text_input("Patient Name", placeholder="Enter patient name")
             examiner_name = st.text_input("Examiner / Doctor Name", placeholder="Enter examiner name")
-            age = st.number_input("Patient Age", 18, 100, 45)
-            sex = st.radio("Biological Sex", ["Male", "Female"])
+            
+            # Use demo data if selected
+            age = st.number_input("Patient Age", 18, 100, value=demo_data['age'] if demo_data else 45)
+            sex = st.radio("Biological Sex", ["Male", "Female"], index=0 if (not demo_data or demo_data['sex'] == "Male") else 1)
             ethnicity = st.selectbox("Ethnicity", ["South Asian / Indian", "Caucasian / White", "African / African American", "East Asian", "Hispanic / Latino", "Other"])
-            sbp = st.slider("Systolic BP (mmHg)", 90, 200, 130)
+            sbp = st.slider("Systolic BP (mmHg)", 90, 200, value=demo_data['sbp'] if demo_data else 130)
             
             # --- CONDITIONAL LOGIC BASED ON GENDER ---
             gender_enhancers = {}
             if sex == "Female":
                 st.info("Pregnancy & Hormonal History")
-                gender_enhancers['preeclampsia'] = st.checkbox("History of Preeclampsia")
-                gender_enhancers['gdm'] = st.checkbox("Gestational Diabetes")
-                gender_enhancers['early_menopause'] = st.checkbox("Menopause < 40 yrs")
-                gender_enhancers['pcos'] = st.checkbox("PCOS Diagnosis")
+                gender_enhancers['preeclampsia'] = st.checkbox("History of Preeclampsia", value=demo_data.get('pre_e', False) if demo_data else False)
+                gender_enhancers['gdm'] = st.checkbox("Gestational Diabetes", value=demo_data.get('gdm', False) if demo_data else False)
+                gender_enhancers['early_menopause'] = st.checkbox("Menopause < 40 yrs", value=demo_data.get('early_m', False) if demo_data else False)
+                gender_enhancers['pcos'] = st.checkbox("PCOS Diagnosis", value=demo_data.get('pcos', False) if demo_data else False)
 
             st.write("---")
             st.write("**High-Yield Risk Enhancers**")
             general_enhancers = {
-                'premature_cad': st.checkbox("Family History of Early Coronary Artery Disease"),
+                'premature_cad': st.checkbox("Family History of Early Coronary Artery Disease", value=demo_data.get('f_hx', False) if demo_data else False),
                 'ckd': st.checkbox("Chronic Kidney Disease"),
                 'lp_a': st.checkbox("Elevated Lp(a) (>50 mg/dL)"),
                 'hs_crp': st.checkbox("hs-CRP ≥ 2.0 mg/L"),
                 'metabolic_syndrome': st.checkbox("Central Obesity / Metabolic Syndrome")
             }
-            smoker = st.checkbox("Tobacco / Smoker")
-            diabetes = st.checkbox("Diabetes")
+            smoker = st.checkbox("Tobacco / Smoker", value=demo_data.get('smoker', False) if demo_data else False)
+            diabetes = st.checkbox("Diabetes", value=demo_data.get('diabetes', False) if demo_data else False)
 
             submit = st.button("Generate Result", use_container_width=True)
 
