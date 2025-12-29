@@ -95,6 +95,8 @@ st.markdown("""
 # Initialize session state to store "Clinician's Dashboard" data
 if 'patient_log' not in st.session_state:
     st.session_state['patient_log'] = []
+if 'current_result' not in st.session_state:
+    st.session_state['current_result'] = None
 
 # --- RISK ENGINE ---
 def calculate_risk(age, sex, ethnicity, sbp, smoker, diabetes, gender_enhancers, general_enhancers):
@@ -206,7 +208,7 @@ with st.sidebar:
     quit_smoking_goal = st.checkbox("Goal: Non-Smoker", value=True)
     manage_diabetes_goal = st.checkbox("Goal: Diabetes Controlled", value=True)
 
-tab1, tab2 = st.tabs(["🏥 Step 1: Doorstep Triage", "📊 Step 2: Clinician's Dashboard"])
+tab1, tab2, tab3, tab4 = st.tabs(["🏥 Step 1: Screening", "🔮 Step 2: What-If Analysis", "🎯 Step 3: Impact Simulator", "📊 Step 4: Clinician Dashboard"])
 
 with tab1:
     with st.container():
@@ -299,42 +301,37 @@ with tab1:
                 st.subheader("💊 Recommendation")
                 st.info(rec)
                 
-                # --- WHAT-IF ENGINE ---
+                # Store results for other tabs
                 current_v_age = calculate_vascular_age(age, sex, sbp, smoker, diabetes)
                 potential_v_age = calculate_vascular_age(age, sex, 120, False, False)
-                years_to_save = max(0, current_v_age - potential_v_age)
                 
-                st.markdown("""
-                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 12px; margin: 20px 0;">
-                        <h3 style="color: white; margin: 0 0 10px 0; text-align: center;">🔮 What-If Analysis: Your Potential</h3>
-                        <p style="color: #e0e0e0; text-align: center; margin-bottom: 15px;">If you optimize BP to 120, quit smoking, and manage diabetes:</p>
-                    </div>
-                """, unsafe_allow_html=True)
-                col_w1, col_w2, col_w3 = st.columns(3)
-                with col_w1:
-                    st.metric("Current Vascular Age", f"{current_v_age} Yrs")
-                with col_w2:
-                    st.metric("Potential Vascular Age", f"{potential_v_age} Yrs")
-                with col_w3:
-                    if years_to_save > 0:
-                        st.metric("Life Years to Gain", f"{years_to_save} Yrs", delta=f"+{years_to_save}")
-                    else:
-                        st.metric("Life Years to Gain", "0 Yrs", delta="Optimal!")
+                st.session_state['current_result'] = {
+                    'patient_name': display_patient_name,
+                    'examiner_name': display_examiner_name,
+                    'exam_date': exam_date,
+                    'age': age,
+                    'sex': sex,
+                    'ethnicity': ethnicity,
+                    'sbp': sbp,
+                    'smoker': smoker,
+                    'diabetes': diabetes,
+                    'risk': risk,
+                    'status': status,
+                    'color': color,
+                    'rec': rec,
+                    'note': note,
+                    'v_age': v_age,
+                    'current_v_age': current_v_age,
+                    'potential_v_age': potential_v_age,
+                    'gender_enhancers': gender_enhancers,
+                    'general_enhancers': general_enhancers,
+                    'motivation': motivation,
+                    'upgraded': upgraded,
+                    'lpa_value': lpa_value,
+                    'hscrp_value': hscrp_value
+                }
                 
-                # --- IMPACT SIMULATOR RESULTS ---
-                target_smoker = not quit_smoking_goal
-                target_diabetes = not manage_diabetes_goal if diabetes else False
-                simulated_risk, _, simulated_status, _ = calculate_risk(age, sex, ethnicity, target_sbp, target_smoker, target_diabetes, gender_enhancers, general_enhancers)
-                
-                if simulated_risk < risk:
-                    risk_reduction = round(risk - simulated_risk, 1)
-                    st.markdown(f"""
-                        <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); padding: 15px; border-radius: 10px; margin: 15px 0; text-align: center;">
-                            <h4 style="color: white; margin: 0;">🎯 Impact Simulator Result</h4>
-                            <p style="color: white; font-size: 1.2em; margin: 10px 0;">By hitting your sidebar targets, your risk drops from <strong>{risk}%</strong> to <strong>{simulated_risk}%</strong></p>
-                            <p style="color: #e0ffe0; font-size: 1.1em; margin: 0;">That's a <strong>{risk_reduction}%</strong> absolute risk reduction!</p>
-                        </div>
-                    """, unsafe_allow_html=True)
+                st.success("✅ Result generated! Navigate to **Step 2** for What-If Analysis and **Step 3** for Impact Simulator.")
                 
                 # Personal Goal Display
                 st.write(f"### 🎯 Your Goal: To stay healthy for **{motivation}**")
@@ -403,6 +400,137 @@ with tab1:
                 )
 
 with tab2:
+    st.header("🔮 What-If Analysis: Your Heart's Potential")
+    
+    if st.session_state['current_result']:
+        r = st.session_state['current_result']
+        
+        st.markdown(f"""
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 15px; margin-bottom: 20px;">
+                <h2 style="color: white; margin: 0; text-align: center;">What if you optimized your lifestyle?</h2>
+                <p style="color: #e0e0e0; text-align: center; margin-top: 10px;">See how lifestyle changes could transform your vascular health</p>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        years_to_save = max(0, r['current_v_age'] - r['potential_v_age'])
+        
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.markdown("""
+                <div style="background: #fff3e0; padding: 20px; border-radius: 10px; text-align: center; height: 150px;">
+                    <h4 style="color: #e65100; margin: 0;">Current State</h4>
+                    <h1 style="color: #e65100; margin: 10px 0; font-size: 3em;">{}</h1>
+                    <p style="color: #666;">Vascular Age (Years)</p>
+                </div>
+            """.format(r['current_v_age']), unsafe_allow_html=True)
+        with col2:
+            st.markdown("""
+                <div style="background: #e8f5e9; padding: 20px; border-radius: 10px; text-align: center; height: 150px;">
+                    <h4 style="color: #2e7d32; margin: 0;">Optimized State</h4>
+                    <h1 style="color: #2e7d32; margin: 10px 0; font-size: 3em;">{}</h1>
+                    <p style="color: #666;">Target Vascular Age</p>
+                </div>
+            """.format(r['potential_v_age']), unsafe_allow_html=True)
+        with col3:
+            if years_to_save > 0:
+                st.markdown(f"""
+                    <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); padding: 20px; border-radius: 10px; text-align: center; height: 150px;">
+                        <h4 style="color: white; margin: 0;">Your Potential</h4>
+                        <h1 style="color: white; margin: 10px 0; font-size: 3em;">+{years_to_save}</h1>
+                        <p style="color: #e0ffe0;">Years to Gain Back!</p>
+                    </div>
+                """, unsafe_allow_html=True)
+            else:
+                st.markdown("""
+                    <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); padding: 20px; border-radius: 10px; text-align: center; height: 150px;">
+                        <h4 style="color: white; margin: 0;">Your Status</h4>
+                        <h1 style="color: white; margin: 10px 0; font-size: 2em;">Optimal!</h1>
+                        <p style="color: #e0ffe0;">Keep it up!</p>
+                    </div>
+                """, unsafe_allow_html=True)
+        
+        st.markdown("---")
+        st.subheader("How to Optimize:")
+        col_a, col_b, col_c = st.columns(3)
+        with col_a:
+            st.info("🩺 **Target BP: 120 mmHg**\nMeditation, low sodium, medication")
+        with col_b:
+            st.info("🚭 **Quit Tobacco**\nNicotine patches, counseling")
+        with col_c:
+            st.info("💊 **Manage Diabetes**\nDiet, exercise, medication adherence")
+    else:
+        st.warning("⚠️ Please complete **Step 1: Screening** first to see your What-If Analysis.")
+
+with tab3:
+    st.header("🎯 Impact Simulator: Your Goal Tracker")
+    
+    if st.session_state['current_result']:
+        r = st.session_state['current_result']
+        
+        st.markdown("""
+            <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); padding: 25px; border-radius: 15px; margin-bottom: 20px;">
+                <h2 style="color: white; margin: 0; text-align: center;">Set Your Health Goals</h2>
+                <p style="color: #e0ffe0; text-align: center; margin-top: 10px;">Adjust the sidebar sliders to see how achievable targets reduce your risk</p>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        # Calculate simulated risk based on sidebar goals
+        target_smoker = not quit_smoking_goal
+        target_diabetes = not manage_diabetes_goal if r['diabetes'] else False
+        simulated_risk, _, simulated_status, simulated_rec = calculate_risk(
+            r['age'], r['sex'], r['ethnicity'], target_sbp, 
+            target_smoker, target_diabetes, r['gender_enhancers'], r['general_enhancers']
+        )
+        
+        st.subheader("Your Current Goals (from sidebar):")
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric("Target BP", f"{target_sbp} mmHg", delta=f"{target_sbp - r['sbp']} from current")
+        with col2:
+            st.metric("Smoking Goal", "Non-Smoker" if quit_smoking_goal else "Smoker")
+        with col3:
+            st.metric("Diabetes Goal", "Controlled" if manage_diabetes_goal else "Uncontrolled")
+        
+        st.markdown("---")
+        
+        col_before, col_arrow, col_after = st.columns([2, 1, 2])
+        with col_before:
+            st.markdown(f"""
+                <div style="background: #ffebee; padding: 30px; border-radius: 15px; text-align: center;">
+                    <h3 style="color: #c62828; margin: 0;">Current Risk</h3>
+                    <h1 style="color: #c62828; font-size: 4em; margin: 10px 0;">{r['risk']}%</h1>
+                    <p style="color: #666;">10-Year CVD Risk</p>
+                </div>
+            """, unsafe_allow_html=True)
+        with col_arrow:
+            st.markdown("""
+                <div style="display: flex; align-items: center; justify-content: center; height: 100%;">
+                    <h1 style="color: #4caf50; font-size: 4em;">→</h1>
+                </div>
+            """, unsafe_allow_html=True)
+        with col_after:
+            st.markdown(f"""
+                <div style="background: #e8f5e9; padding: 30px; border-radius: 15px; text-align: center;">
+                    <h3 style="color: #2e7d32; margin: 0;">With Your Goals</h3>
+                    <h1 style="color: #2e7d32; font-size: 4em; margin: 10px 0;">{simulated_risk}%</h1>
+                    <p style="color: #666;">Projected Risk</p>
+                </div>
+            """, unsafe_allow_html=True)
+        
+        risk_reduction = round(r['risk'] - simulated_risk, 1)
+        if risk_reduction > 0:
+            st.markdown(f"""
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 10px; margin-top: 20px; text-align: center;">
+                    <h2 style="color: white; margin: 0;">🎉 You could reduce your risk by {risk_reduction}%!</h2>
+                    <p style="color: #e0e0e0; margin-top: 10px;">That's a significant improvement in your heart health outlook.</p>
+                </div>
+            """, unsafe_allow_html=True)
+        else:
+            st.info("Your current health metrics are already optimized based on these goals!")
+    else:
+        st.warning("⚠️ Please complete **Step 1: Screening** first to use the Impact Simulator.")
+
+with tab4:
     st.header("📈 Mobile Clinic Session Summary")
     
     if st.session_state['patient_log']:
@@ -414,7 +542,7 @@ with tab2:
         with col1:
             st.metric("Total Screened", len(df))
         with col2:
-            high_risk_count = len(df[df['Status'] == 'HIGH'])
+            high_risk_count = len(df[df['Status'].str.contains('HIGH', na=False)])
             st.metric("High Risk Patients", high_risk_count)
         with col3:
             intermediate_count = len(df[df['Status'] == 'INTERMEDIATE'])
