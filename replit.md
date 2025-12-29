@@ -1,15 +1,15 @@
-# CalciTrack - Mobile Cardiac Triage System
+# CalciTrack India - Mobile Cardiac Triage System
 
 ## Overview
-CalciTrack is a mobile point-of-service cardiac screening application built with Streamlit. It calculates 10-year cardiovascular disease risk using a simplified MESA/ASCVD-based algorithm and provides triage recommendations.
+CalciTrack India is a mobile point-of-service cardiac screening application built with Streamlit, specifically adapted for the South Asian/Indian population. It calculates 10-year cardiovascular disease risk using an algorithm adjusted for South Asian premature CAD risk factors.
 
 ## Features
-- Patient intake form with demographic and clinical data
-- Risk calculation based on age, sex, ethnicity, blood pressure, and risk enhancers
+- Patient intake form with India-specific clinical data
+- Risk calculation adjusted for South Asian population (higher baseline risk)
+- India-specific risk enhancers (tobacco/bidi use, premature CAD family history, metabolic syndrome)
 - Color-coded triage status (Green/Yellow/Red)
-- Vascular age calculation
-- Interactive map showing nearby cardiology partners for referrals
-- Clinical guidance recommendations
+- Vascular age calculation (typically higher gap for South Asians)
+- Clinical guidance recommendations for Indian context
 
 ## Project Structure
 - `app.py` - Main Streamlit application
@@ -21,10 +21,16 @@ The app runs via Streamlit on port 5000:
 streamlit run app.py --server.port 5000
 ```
 
-## Risk Categories
-- **LOW RISK (Green)**: < 5.0% - Routine follow-up
-- **INTERMEDIATE (Yellow)**: 5.0% - 7.5% - Recommend CAC Scan
-- **HIGH RISK (Red)**: > 7.5% - Urgent cardiology referral
+## Risk Categories (Adjusted for Indian Population)
+- **LOW RISK (Green)**: < 5.0% - Heart-healthy diet, follow-up in 1-2 years
+- **INTERMEDIATE (Yellow)**: 5.0% - 10.0% - Recommend CAC or CT Coronary Angio
+- **HIGH RISK (Red)**: > 10.0% - Urgent cardiology referral for premature CAD
+
+## India-Specific Risk Factors
+- Smoker / Tobacco / Bidi User
+- Diabetes (HbA1c > 6.5)
+- Family History of Early Heart Attack (Premature CAD)
+- Central Obesity / High Waist-to-Hip Ratio (Metabolic Syndrome)
 
 ## Dependencies
 - streamlit
@@ -34,5 +40,6 @@ streamlit run app.py --server.port 5000
 
 ## Technical Notes
 - Uses st.session_state to persist calculation results across Streamlit reruns
-- Map centered on NYC coordinates (40.7128, -74.0060) by default
+- Default age set to 40 (vs 50 in Western models) due to earlier CAD onset in South Asians
+- South Asian Multiplier applied to risk calculations
 - Disclaimer: Educational/prototype tool, not for clinical use
