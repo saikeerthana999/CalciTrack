@@ -1,6 +1,7 @@
 import streamlit as st
 import urllib.parse
 import pandas as pd
+from datetime import datetime
 
 # --- APP CONFIG ---
 st.set_page_config(page_title="CalciTrack", page_icon="🧡", layout="wide")
@@ -65,6 +66,8 @@ with tab1:
         
         with col_a:
             st.subheader("📋 Intake")
+            patient_name = st.text_input("Patient Name", placeholder="Enter patient name")
+            examiner_name = st.text_input("Examiner / Doctor Name", placeholder="Enter examiner name")
             age = st.number_input("Patient Age", 18, 100, 45)
             sex = st.radio("Biological Sex", ["Male", "Female"])
             ethnicity = st.selectbox("Ethnicity", ["South Asian / Indian", "Caucasian / White", "African / African American", "East Asian", "Hispanic / Latino", "Other"])
@@ -111,8 +114,12 @@ with tab1:
                 active_gender = [k.replace('_', ' ').title() for k, v in gender_enhancers.items() if v]
                 active_general = [k.replace('_', ' ').title() for k, v in general_enhancers.items() if v]
                 all_enhancers = active_gender + active_general
+                exam_date = datetime.now().strftime("%B %d, %Y")
                 
-                note = f"Patient ({age}y {sex}, {ethnicity}) - 10-Year Risk: {risk}%. Triage: {status} RISK."
+                display_patient_name = patient_name if patient_name else "Not provided"
+                display_examiner_name = examiner_name if examiner_name else "Not provided"
+                
+                note = f"Patient: {display_patient_name} ({age}y {sex}, {ethnicity}) - 10-Year Risk: {risk}%. Triage: {status} RISK."
                 if all_enhancers:
                     note += f" Risk Enhancers: {', '.join(all_enhancers)}."
                 
@@ -126,12 +133,13 @@ with tab1:
                 
                 # Save to Dashboard
                 st.session_state['patient_log'].append({
+                    "Date": exam_date,
+                    "Patient": display_patient_name,
                     "Age": age, 
                     "Sex": sex, 
-                    "Ethnicity": ethnicity,
                     "Risk %": risk, 
                     "Status": status,
-                    "Enhancers": len(all_enhancers)
+                    "Examiner": display_examiner_name
                 })
                 
                 # WhatsApp Share
@@ -153,7 +161,9 @@ with tab1:
                         <h4 style="font-style: italic;">"Care Ever, Neglect Never"</h4>
                         <hr>
                         <h3>Heart Health Summary</h3>
-                        <p>This is to certify that a cardiac risk screening was performed today.</p>
+                        <p><strong>Date of Examination:</strong> {exam_date}</p>
+                        <p><strong>Patient Name:</strong> {patient_name}</p>
+                        <p>This is to certify that a cardiac risk screening was performed.</p>
                         <div style="display: flex; justify-content: space-around; margin: 15px 0;">
                             <div><strong>Vascular Age:</strong> {v_age} Years</div>
                             <div><strong>Triage Status:</strong> {status}</div>
@@ -163,9 +173,10 @@ with tab1:
                             <span style="font-size: 0.95em;">{note}</span>
                         </div>
                         <hr>
+                        <p><strong>Examined by:</strong> {examiner_name}</p>
                         <p style="font-weight: bold; color: #ff4b4b;">Screen Early, Live Fully.</p>
                     </div>
-                """.format(v_age=v_age, status=status, note=note), unsafe_allow_html=True)
+                """.format(v_age=v_age, status=status, note=note, exam_date=exam_date, patient_name=display_patient_name, examiner_name=display_examiner_name), unsafe_allow_html=True)
 
 with tab2:
     st.header("📈 Mobile Clinic Session Summary")
