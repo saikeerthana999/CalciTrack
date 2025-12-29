@@ -199,6 +199,11 @@ with tab1:
             }
             smoker = st.checkbox("Tobacco / Smoker", value=demo_data.get('smoker', False) if demo_data else False)
             diabetes = st.checkbox("Diabetes", value=demo_data.get('diabetes', False) if demo_data else False)
+            
+            # --- ADVANCED CLINICAL MODULE ---
+            with st.expander("🔬 Advanced Precision Markers (Optional)"):
+                lpa_value = st.number_input("Lp(a) level (mg/dL) - Genetic Marker", 0, 300, value=0)
+                hscrp_value = st.number_input("hs-CRP (mg/L) - Inflammation Marker", 0.0, 20.0, value=0.0, step=0.1)
 
             submit = st.button("Generate Result", use_container_width=True)
 
@@ -206,6 +211,14 @@ with tab1:
             if submit:
                 risk, color, status, rec = calculate_risk(age, sex, ethnicity, sbp, smoker, diabetes, gender_enhancers, general_enhancers)
                 v_age = age + (10 if risk > 7 else 0)
+                
+                # Risk Upgrade based on Precision Markers
+                upgraded = False
+                if status == "INTERMEDIATE" and (lpa_value > 50 or hscrp_value > 2.0):
+                    status = "HIGH (UPGRADED)"
+                    color = "red"
+                    rec = "High-intensity statin therapy and aggressive LDL-C lowering recommended. Direct referral for Specialist Consultation and possible Functional Stress Testing."
+                    upgraded = True
                 
                 # Visuals
                 st.markdown(f"### Result: :{color}[{status} RISK]")
@@ -228,6 +241,8 @@ with tab1:
                 note = f"Patient: {display_patient_name} ({age}y {sex}, {ethnicity}) - 10-Year Risk: {risk}%. Triage: {status} RISK."
                 if all_enhancers:
                     note += f" Risk Enhancers: {', '.join(all_enhancers)}."
+                if upgraded:
+                    note += f" CRITICAL: Risk upgraded due to high Genetic/Inflammatory markers (Lp(a): {lpa_value} mg/dL, hs-CRP: {hscrp_value} mg/L)."
                 
                 st.subheader("📝 Clinical Impression")
                 st.code(note, language=None)
