@@ -1,6 +1,4 @@
 import streamlit as st
-import folium
-from streamlit_folium import st_folium
 
 # --- PAGE CONFIG & STYLING ---
 st.set_page_config(page_title="CalciTrack | Mobile Cardiac Triage", page_icon="❤️", layout="wide")
@@ -92,32 +90,6 @@ if st.session_state.show_results and st.session_state.risk_data:
         st.metric("Target SBP", "<120 mmHg")
 
     st.info(f"**Clinical Guidance:** {rec}")
-
-    # 3. Point of Service Map
-    if risk >= 5.0:
-        st.write("---")
-        st.subheader("📍 Doorstep Referral: Nearest Cardiology Partners")
-        
-        # Center of Map (Mocked for Demo - use Replit Secrets for real GPS)
-        lat, lon = 40.7128, -74.0060 
-        
-        m = folium.Map(location=[lat, lon], zoom_start=13, control_scale=True)
-        
-        # Add Mobile Clinic (Blue)
-        folium.Marker([lat, lon], tooltip="Mobile Clinic Location", icon=folium.Icon(color='blue', icon='truck', prefix='fa')).add_to(m)
-        
-        # Add Partner Clinics (Red)
-        partners = [
-            {"name": "Heart & Vascular Institute", "coords": [lat+0.01, lon+0.02]},
-            {"name": "Advanced Imaging (CAC Scans)", "coords": [lat-0.015, lon-0.01]}
-        ]
-        for p in partners:
-            folium.Marker(p["coords"], popup=p["name"], icon=folium.Icon(color='red', icon='heart', prefix='fa')).add_to(m)
-            
-        st_folium(m, width=1000, height=400)
-        
-        # 4. Digital Packet Export
-        st.button("📧 Send Digital Referral Packet to Specialist")
 
 else:
     st.write("👈 Fill out the patient intake form on the left to begin triage.")
