@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import datetime
 from fpdf import FPDF
 
-def create_pdf_report(patient_name, examiner_name, exam_date, age, sex, risk, v_age, status, note, motivation):
+def create_pdf_report(patient_name, examiner_name, exam_date, age, sex, risk, v_age, status, note, motivation, rec):
     pdf = FPDF()
     pdf.add_page()
     
@@ -40,6 +40,12 @@ def create_pdf_report(patient_name, examiner_name, exam_date, age, sex, risk, v_
     pdf.cell(200, 10, txt="Clinical Impression:", ln=True)
     pdf.set_font("Arial", '', 11)
     pdf.multi_cell(0, 8, txt=note)
+    pdf.ln(5)
+    
+    pdf.set_font("Arial", 'B', 12)
+    pdf.cell(200, 10, txt="Recommendation:", ln=True)
+    pdf.set_font("Arial", 'I', 11)
+    pdf.multi_cell(0, 8, txt=rec)
     pdf.ln(10)
     
     pdf.set_font("Arial", '', 11)
@@ -82,9 +88,22 @@ def calculate_risk(age, sex, ethnicity, sbp, smoker, diabetes, gender_enhancers,
     
     risk_pct = round(min(max(((score + gender_pts + general_pts) / 1.5) * 1.1, 1.2), 50.0), 1)
     
-    if risk_pct < 5.0: return risk_pct, "green", "LOW"
-    elif 5.0 <= risk_pct < 10.0: return risk_pct, "orange", "INTERMEDIATE"
-    else: return risk_pct, "red", "HIGH"
+    premature_cad = general_enhancers.get('premature_cad', False)
+    
+    if risk_pct < 5.0 and not premature_cad:
+        status = "LOW"
+        color = "green"
+        rec = "Encourage 'Life's Essential 8' (Healthy diet, Activity, No Tobacco). Re-evaluate in 3-5 years."
+    elif 5.0 <= risk_pct < 19.9:
+        status = "INTERMEDIATE"
+        color = "orange"
+        rec = "CSI/AHA Guidelines recommend CAC Scoring (Agatston Method) for RISK RECLASSIFICATION. A score >0 favors initiation of statin therapy."
+    else:
+        status = "HIGH"
+        color = "red"
+        rec = "High-intensity statin therapy and aggressive LDL-C lowering recommended. Direct referral for Specialist Consultation and possible Functional Stress Testing."
+    
+    return risk_pct, color, status, rec
 
 # --- UI LAYOUT ---
 st.image("attached_assets/Gemini_Generated_Image_fa87vfa87vfa87vf_1767032834009.png", width=200)
@@ -147,7 +166,7 @@ with tab1:
 
         with col_b:
             if submit:
-                risk, color, status = calculate_risk(age, sex, ethnicity, sbp, smoker, diabetes, gender_enhancers, general_enhancers)
+                risk, color, status, rec = calculate_risk(age, sex, ethnicity, sbp, smoker, diabetes, gender_enhancers, general_enhancers)
                 v_age = age + (10 if risk > 7 else 0)
                 
                 # Visuals
@@ -174,6 +193,10 @@ with tab1:
                 
                 st.subheader("📝 Clinical Impression")
                 st.code(note, language=None)
+                
+                # Recommendation
+                st.subheader("💊 Recommendation")
+                st.info(rec)
                 
                 # Personal Goal Display
                 st.write(f"### 🎯 Your Goal: To stay healthy for **{motivation}**")
@@ -221,14 +244,18 @@ with tab1:
                             <strong>Clinical Impression:</strong><br>
                             <span style="font-size: 0.95em;">{note}</span>
                         </div>
+                        <div style="background-color: #e8f4f8; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left;">
+                            <strong>Recommendation:</strong><br>
+                            <span style="font-size: 0.95em; font-style: italic;">{rec}</span>
+                        </div>
                         <hr>
                         <p><strong>Examined by:</strong> {examiner_name}</p>
                         <p style="font-weight: bold; color: #ff4b4b;">Screen Early, Live Fully.</p>
                     </div>
-                """.format(v_age=v_age, status=status, note=note, exam_date=exam_date, patient_name=display_patient_name, examiner_name=display_examiner_name), unsafe_allow_html=True)
+                """.format(v_age=v_age, status=status, note=note, exam_date=exam_date, patient_name=display_patient_name, examiner_name=display_examiner_name, rec=rec), unsafe_allow_html=True)
                 
                 # PDF Download Button
-                pdf_data = create_pdf_report(display_patient_name, display_examiner_name, exam_date, age, sex, risk, v_age, status, note, motivation)
+                pdf_data = create_pdf_report(display_patient_name, display_examiner_name, exam_date, age, sex, risk, v_age, status, note, motivation, rec)
                 st.download_button(
                     label="📄 Download Patient Summary PDF",
                     data=pdf_data,
