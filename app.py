@@ -4,56 +4,80 @@ import pandas as pd
 from datetime import datetime
 from fpdf import FPDF
 
-def create_pdf_report(patient_name, examiner_name, exam_date, age, sex, risk, v_age, status, note, motivation, rec):
+def create_pdf_report(patient_name, examiner_name, exam_date, age, sex, risk, current_v_age, potential_v_age, status, note, motivation, rec):
     pdf = FPDF()
     pdf.add_page()
     
-    pdf.set_font("Arial", 'B', 16)
-    pdf.set_text_color(255, 75, 75)
-    pdf.cell(200, 10, txt="CalciTrack", ln=True, align='C')
-    
+    # Professional Header
+    pdf.set_font("Arial", 'B', 18)
+    pdf.set_text_color(200, 0, 0)
+    pdf.cell(200, 10, txt="CalciTrack: Advanced Vascular Report", ln=True, align='C')
     pdf.set_font("Arial", 'I', 10)
     pdf.set_text_color(0, 0, 0)
-    pdf.cell(200, 10, txt='"Care Ever, Neglect Never"', ln=True, align='C')
-    pdf.ln(10)
-    
-    pdf.set_font("Arial", 'B', 12)
-    pdf.cell(200, 10, txt="Heart Health Summary", ln=True, align='C')
+    pdf.cell(200, 8, txt='"Care Ever, Neglect Never"', ln=True, align='C')
     pdf.ln(5)
+    
+    # Patient Info
+    pdf.set_font("Arial", '', 11)
+    pdf.cell(200, 7, txt=f"Date of Examination: {exam_date}", ln=True)
+    pdf.cell(200, 7, txt=f"Patient Name: {patient_name}", ln=True)
+    pdf.cell(200, 7, txt=f"Patient Profile: {age} year old {sex}", ln=True)
+    pdf.cell(200, 7, txt=f"Primary Motivation: {motivation}", ln=True)
+    pdf.ln(5)
+    
+    # The "What-If" Comparative Table
+    pdf.set_fill_color(230, 230, 250)
+    pdf.set_font("Arial", 'B', 12)
+    pdf.set_text_color(0, 0, 0)
+    pdf.cell(190, 10, txt="VASCULAR AGE ANALYSIS", ln=True, fill=True, align='C')
     
     pdf.set_font("Arial", '', 11)
-    pdf.cell(200, 8, txt=f"Date of Examination: {exam_date}", ln=True)
-    pdf.cell(200, 8, txt=f"Patient Name: {patient_name}", ln=True)
-    pdf.cell(200, 8, txt=f"Patient Profile: {age} year old {sex}", ln=True)
-    pdf.cell(200, 8, txt=f"Primary Motivation: {motivation}", ln=True)
-    pdf.ln(5)
+    pdf.cell(95, 10, txt=f"Current Vascular Age: {current_v_age} years", border=1)
+    pdf.cell(95, 10, txt=f"Target Vascular Age: {potential_v_age} years", border=1, ln=True)
     
-    pdf.set_fill_color(240, 240, 240)
-    pdf.rect(10, pdf.get_y(), 190, 30, 'F')
+    # High-Impact Highlight
+    years_gained = max(0, current_v_age - potential_v_age)
+    pdf.set_font("Arial", 'B', 14)
+    pdf.set_text_color(0, 128, 0)
+    if years_gained > 0:
+        pdf.cell(200, 15, txt=f"Potential Benefit: Gain back {years_gained} years of Heart Health!", ln=True, align='C')
+    else:
+        pdf.cell(200, 15, txt="Optimal: Your vascular health is at its best potential!", ln=True, align='C')
+    
+    # Risk Summary
+    pdf.set_text_color(0, 0, 0)
     pdf.set_font("Arial", 'B', 12)
     pdf.cell(200, 10, txt=f"10-Year Cardiovascular Risk: {risk}%", ln=True)
-    pdf.cell(200, 10, txt=f"Estimated Vascular Age: {v_age} Years", ln=True)
-    pdf.cell(200, 10, txt=f"Triage Status: {status}", ln=True)
-    pdf.ln(10)
+    pdf.ln(3)
     
+    # Advanced Biomarkers Section
+    pdf.set_font("Arial", 'B', 12)
+    pdf.cell(200, 10, txt="Precision Medicine Markers:", ln=True)
+    pdf.set_font("Arial", 'I', 10)
+    pdf.multi_cell(0, 7, txt="This report integrates Lp(a) and hs-CRP inflammatory markers to provide a precision-based risk reclassification beyond standard age-based metrics.")
+    pdf.ln(3)
+    
+    # Clinical Impression
     pdf.set_font("Arial", 'B', 12)
     pdf.cell(200, 10, txt="Clinical Impression:", ln=True)
-    pdf.set_font("Arial", '', 11)
-    pdf.multi_cell(0, 8, txt=note)
+    pdf.set_font("Arial", '', 10)
+    pdf.multi_cell(0, 7, txt=note)
+    pdf.ln(3)
+    
+    # Actionable Triage Box
+    pdf.set_fill_color(255, 255, 204)
+    pdf.set_font("Arial", 'B', 13)
+    pdf.cell(190, 10, txt=f"CLINICAL TRIAGE: {status}", ln=True, fill=True, align='C')
+    pdf.set_font("Arial", '', 10)
+    pdf.multi_cell(0, 7, txt=f"Recommendation: {rec}")
     pdf.ln(5)
     
-    pdf.set_font("Arial", 'B', 12)
-    pdf.cell(200, 10, txt="Recommendation:", ln=True)
-    pdf.set_font("Arial", 'I', 11)
-    pdf.multi_cell(0, 8, txt=rec)
-    pdf.ln(10)
-    
+    # Footer
     pdf.set_font("Arial", '', 11)
     pdf.cell(200, 8, txt=f"Examined by: {examiner_name}", ln=True)
-    
-    pdf.ln(15)
+    pdf.ln(10)
     pdf.set_font("Arial", 'B', 12)
-    pdf.set_text_color(255, 75, 75)
+    pdf.set_text_color(200, 0, 0)
     pdf.cell(200, 10, txt="Screen Early, Live Fully.", ln=True, align='C')
     
     return pdf.output(dest='S').encode('latin-1')
@@ -347,7 +371,7 @@ with tab1:
                 """.format(v_age=v_age, status=status, note=note, exam_date=exam_date, patient_name=display_patient_name, examiner_name=display_examiner_name, rec=rec), unsafe_allow_html=True)
                 
                 # PDF Download Button
-                pdf_data = create_pdf_report(display_patient_name, display_examiner_name, exam_date, age, sex, risk, v_age, status, note, motivation, rec)
+                pdf_data = create_pdf_report(display_patient_name, display_examiner_name, exam_date, age, sex, risk, current_v_age, potential_v_age, status, note, motivation, rec)
                 st.download_button(
                     label="📄 Download Patient Summary PDF",
                     data=pdf_data,
