@@ -1,0 +1,221 @@
+import streamlit as st
+
+import folium
+
+from streamlit_folium import st_folium
+
+import urllib.parse
+
+import pandas as pd
+
+
+
+# --- APP CONFIG ---
+
+st.set_page_config(page_title="CalciTrack", page_icon="🧡", layout="wide")
+
+
+
+# Initialize session state to store "Clinician's Dashboard" data
+
+if 'patient_log' not in st.session_state:
+
+    st.session_state['patient_log'] = []
+
+
+
+# --- RISK ENGINE ---
+
+def calculate_risk(age, sex, sbp, smoker, diabetes, gender_enhancers, general_enhancers):
+
+    # Base logic adjusted for South Asian CAD risk
+
+    score = (age * 0.15) + (sbp * 0.06)
+
+    if sex == "Male": score += 2.0
+
+    if smoker: score += 7.0
+
+    if diabetes: score += 8.0
+
+    
+
+    # Weight Gender-Specific Enhancers
+
+    gender_pts = sum([5.0 for v in gender_enhancers.values() if v])
+
+    general_pts = sum([5.0 for v in general_enhancers.values() if v])
+
+    
+
+    risk_pct = round(min(max(((score + gender_pts + general_pts) / 1.5) * 1.1, 1.2), 50.0), 1)
+
+    
+
+    if risk_pct < 5.0: return risk_pct, "green", "LOW"
+
+    elif 5.0 <= risk_pct < 10.0: return risk_pct, "orange", "INTERMEDIATE"
+
+    else: return risk_pct, "red", "HIGH"
+
+
+
+# --- UI LAYOUT ---
+
+tab1, tab2 = st.tabs(["🏥 Step 1: Doorstep Triage", "📊 Step 2: Clinician's Dashboard"])
+
+
+
+with tab1:
+
+    st.title("🛡️ CalciTrack India")
+
+    st.caption("Point-of-Service Triage Tool")
+
+    
+
+    with st.container():
+
+        col_a, col_b = st.columns([1, 2])
+
+        
+
+        with col_a:
+
+            st.subheader("📋 Intake")
+
+            age = st.number_input("Patient Age", 18, 100, 45)
+
+            sex = st.radio("Biological Sex", ["Male", "Female"])
+
+            sbp = st.slider("Systolic BP (mmHg)", 90, 200, 130)
+
+            
+
+            # --- CONDITIONAL LOGIC BASED ON GENDER ---
+
+            gender_enhancers = {}
+
+            if sex == "Female":
+
+                st.info("Pregnancy & Hormonal History")
+
+                gender_enhancers['preeclampsia'] = st.checkbox("History of Preeclampsia")
+
+                gender_enhancers['gdm'] = st.checkbox("Gestational Diabetes")
+
+                gender_enhancers['early_menopause'] = st.checkbox("Menopause < 40 yrs")
+
+                gender_enhancers['pcos'] = st.checkbox("PCOS Diagnosis")
+
+            else:
+
+                st.info("Androgen-Related Risk")
+
+                gender_enhancers['erectile_dysfunction'] = st.checkbox("History of Erectile Dysfunction")
+
+
+
+            st.write("---")
+
+            general_enhancers = {
+
+                'premature_cad': st.checkbox("Family History of Early CAD"),
+
+                'ckd': st.checkbox("Chronic Kidney Disease")
+
+            }
+
+            smoker = st.checkbox("Tobacco / Smoker")
+
+            diabetes = st.checkbox("Diabetes")
+
+
+
+            submit = st.button("Generate Result", use_container_width=True)
+
+
+
+        with col_b:
+
+            if submit:
+
+                risk, color, status = calculate_risk(age, sex, sbp, smoker, diabetes, gender_enhancers, general_enhancers)
+
+                v_age = age + (10 if risk > 7 else 0)
+
+                
+
+                # Visuals
+
+                st.markdown(f"### Result: :{color}[{status} RISK]")
+
+                st.metric("10-Year ASCVD Risk", f"{risk}%")
+
+                st.metric("Estimated Vascular Age", f"{v_age} Yrs", delta=f"{v_age - age} yrs vs Bio")
+
+                
+
+                # Clinical Note
+
+                note = f"Patient ({age}y {sex}) - Risk: {risk}%. Triage: {status}. Enhancers: {sum(gender_enhancers.values()) + sum(general_enhancers.values())}"
+
+                st.code(note)
+
+                
+
+                # Save to Dashboard
+
+                st.session_state['patient_log'].append({"Age": age, "Sex": sex, "Risk": risk, "Status": status})
+
+                
+
+                # Referral Map
+
+                st.subheader("📍 Nearest Cardiac Center")
+
+                m = folium.Map(location=[19.0760, 72.8777], zoom_start=12) # Mumbai center
+
+                st_folium(m, width=600, height=300)
+
+                
+
+                # WhatsApp Share
+
+                wa_msg = urllib.parse.quote(f"CalciTrack India: {note}")
+
+                st.markdown(f"[📲 Share via WhatsApp](https://wa.me/?text={wa_msg})")
+
+
+
+with tab2:
+
+    st.header("📈 Mobile Clinic Session Summary")
+
+    if st.session_state['patient_log']:
+
+        df = pd.DataFrame(st.session_state['patient_log'])
+
+        st.dataframe(df, use_container_width=True)
+
+        
+
+        # Summary Analytics
+
+        st.write(f"**Total Screened:** {len(df)}")
+
+        st.write(f"**High Risk (Red) Patients Identified:** {len(df[df['Status'] == 'HIGH'])}")
+
+        
+
+        # Button to Clear
+
+        if st.button("Clear Session Data"):
+
+            st.session_state['patient_log'] = []
+
+            st.rerun()
+
+    else:
+
+        st.write("No patients screened in this session yet.")
