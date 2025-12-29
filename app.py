@@ -66,14 +66,11 @@ with tab1:
                 gender_enhancers['gdm'] = st.checkbox("Gestational Diabetes")
                 gender_enhancers['early_menopause'] = st.checkbox("Menopause < 40 yrs")
                 gender_enhancers['pcos'] = st.checkbox("PCOS Diagnosis")
-            else:
-                st.info("Androgen-Related Risk")
-                gender_enhancers['erectile_dysfunction'] = st.checkbox("History of Erectile Dysfunction")
 
             st.write("---")
             st.write("**High-Yield Risk Enhancers**")
             general_enhancers = {
-                'premature_cad': st.checkbox("Family History of Early CAD"),
+                'premature_cad': st.checkbox("Family History of Early Coronary Artery Disease"),
                 'ckd': st.checkbox("Chronic Kidney Disease"),
                 'lp_a': st.checkbox("Elevated Lp(a) (>50 mg/dL)"),
                 'hs_crp': st.checkbox("hs-CRP ≥ 2.0 mg/L"),
