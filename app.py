@@ -105,6 +105,19 @@ def calculate_risk(age, sex, ethnicity, sbp, smoker, diabetes, gender_enhancers,
     
     return risk_pct, color, status, rec
 
+# --- VASCULAR AGE ENGINE ---
+def calculate_vascular_age(age, sex, sbp, smoker, diabetes):
+    v_age = age
+    if sbp > 120:
+        v_age += (sbp - 120) * 0.1
+    if smoker:
+        v_age += 8
+    if diabetes:
+        v_age += 6
+    if sex == "Male":
+        v_age += 2
+    return round(v_age)
+
 # --- UI LAYOUT ---
 st.image("attached_assets/Gemini_Generated_Image_fa87vfa87vfa87vf_1767032834009.png", width=200)
 st.markdown("""
@@ -250,6 +263,22 @@ with tab1:
                 # Recommendation
                 st.subheader("💊 Recommendation")
                 st.info(rec)
+                
+                # --- WHAT-IF ENGINE ---
+                current_v_age = calculate_vascular_age(age, sex, sbp, smoker, diabetes)
+                potential_v_age = calculate_vascular_age(age, sex, 120, False, False)
+                years_to_save = max(0, current_v_age - potential_v_age)
+                
+                if years_to_save > 0:
+                    st.subheader("🔮 What-If Analysis")
+                    st.success(f"**If you optimize BP to 120, quit smoking, and manage diabetes:**")
+                    col_w1, col_w2, col_w3 = st.columns(3)
+                    with col_w1:
+                        st.metric("Current Vascular Age", f"{current_v_age} Yrs")
+                    with col_w2:
+                        st.metric("Potential Vascular Age", f"{potential_v_age} Yrs")
+                    with col_w3:
+                        st.metric("Life Years to Gain", f"{years_to_save} Yrs", delta=f"+{years_to_save}")
                 
                 # Personal Goal Display
                 st.write(f"### 🎯 Your Goal: To stay healthy for **{motivation}**")
