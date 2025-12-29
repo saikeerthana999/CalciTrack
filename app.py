@@ -154,14 +154,18 @@ with tab1:
                         <hr>
                         <h3>Heart Health Summary</h3>
                         <p>This is to certify that a cardiac risk screening was performed today.</p>
-                        <div style="display: flex; justify-content: space-around;">
+                        <div style="display: flex; justify-content: space-around; margin: 15px 0;">
                             <div><strong>Vascular Age:</strong> {v_age} Years</div>
                             <div><strong>Triage Status:</strong> {status}</div>
+                        </div>
+                        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left;">
+                            <strong>Clinical Impression:</strong><br>
+                            <span style="font-size: 0.95em;">{note}</span>
                         </div>
                         <hr>
                         <p style="font-weight: bold; color: #ff4b4b;">Screen Early, Live Fully.</p>
                     </div>
-                """.format(v_age=v_age, status=status), unsafe_allow_html=True)
+                """.format(v_age=v_age, status=status, note=note), unsafe_allow_html=True)
 
 with tab2:
     st.header("📈 Mobile Clinic Session Summary")
