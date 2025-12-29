@@ -2,7 +2,7 @@ import streamlit as st
 import urllib.parse
 
 # --- PAGE CONFIG ---
-st.set_page_config(page_title="CalciTrack India | Clinical Triage", page_icon="🧡", layout="wide")
+st.set_page_config(page_title="CalciTrack | Clinical Triage", page_icon="🧡", layout="wide")
 
 st.markdown("""
     <style>
@@ -18,7 +18,7 @@ if 'risk_data' not in st.session_state:
     st.session_state.risk_data = None
 
 # --- RISK ENGINE WITH ENHANCERS ---
-def calculate_calcitrack_india(age, sex, ethnicity, sbp, smoker, diabetes, enhancers):
+def calculate_calcitrack_risk(age, sex, ethnicity, sbp, smoker, diabetes, enhancers):
     # Base logic adjusted for South Asian CAD risk
     base_risk = (age * 0.15) + (sbp * 0.06)
     
@@ -47,7 +47,7 @@ def calculate_calcitrack_india(age, sex, ethnicity, sbp, smoker, diabetes, enhan
         return risk_pct, "red", "HIGH RISK (Red)", "Urgent: Direct Cardiology Referral required."
 
 # --- APP UI ---
-st.title("🛡️ CalciTrack India")
+st.image("attached_assets/Gemini_Generated_Image_fa87vfa87vfa87vf_1767032834009.png", width=200)
 st.caption("Doorstep Cardiac Screening & Specialist Referral")
 
 with st.sidebar:
@@ -73,7 +73,7 @@ with st.sidebar:
     }
     
     if st.button("Generate Triage Result", use_container_width=True):
-        risk, color, status, rec = calculate_calcitrack_india(age, sex, ethnicity, sbp, smoker, diabetes, enhancers)
+        risk, color, status, rec = calculate_calcitrack_risk(age, sex, ethnicity, sbp, smoker, diabetes, enhancers)
         v_age = age + (12 if risk > 7 else 0)
         
         active_enhancers = [k.replace('_', ' ').title() for k, v in enhancers.items() if v]
@@ -120,7 +120,7 @@ if st.session_state.show_results and st.session_state.risk_data:
     st.code(note, language=None)
 
     # 3. WHATSAPP REFERRAL
-    whatsapp_msg = urllib.parse.quote(f"*CalciTrack India Referral*\n\n{note}")
+    whatsapp_msg = urllib.parse.quote(f"*CalciTrack Referral*\n\n{note}")
     wa_url = f"https://wa.me/?text={whatsapp_msg}"
     
     st.markdown(f"""
