@@ -128,6 +128,23 @@ with tab1:
                         </button>
                     </a>
                 """, unsafe_allow_html=True)
+                
+                # Heart Health Summary Certificate
+                st.markdown("""
+                    <div style="border: 5px solid #ff4b4b; padding: 20px; border-radius: 10px; text-align: center; background-color: white; margin-top: 20px;">
+                        <h2 style="color: #ff4b4b;">CalciTrack</h2>
+                        <h4 style="font-style: italic;">"Care Ever, Neglect Never"</h4>
+                        <hr>
+                        <h3>Heart Health Summary</h3>
+                        <p>This is to certify that a cardiac risk screening was performed today.</p>
+                        <div style="display: flex; justify-content: space-around;">
+                            <div><strong>Vascular Age:</strong> {v_age} Years</div>
+                            <div><strong>Triage Status:</strong> {status}</div>
+                        </div>
+                        <hr>
+                        <p style="font-weight: bold; color: #ff4b4b;">Screen Early, Live Fully.</p>
+                    </div>
+                """.format(v_age=v_age, status=status), unsafe_allow_html=True)
 
 with tab2:
     st.header("📈 Mobile Clinic Session Summary")
