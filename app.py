@@ -198,6 +198,13 @@ with st.sidebar:
     motivation = st.selectbox("I want to stay healthy for...", ["My Family", "My Children's Future", "My Work", "Religious Pilgrimage"])
     diet = st.radio("Dietary Habit", ["Pure Veg", "Non-Veg", "Eggetarian"])
     sleep_apnea = st.checkbox("Heavy Snoring / Daytime Sleepiness")
+    
+    st.markdown("---")
+    st.subheader("🔄 Impact Simulator")
+    st.caption("Set your health goals to see potential risk reduction")
+    target_sbp = st.slider("Goal Systolic BP", 110, 160, 120)
+    quit_smoking_goal = st.checkbox("Goal: Non-Smoker", value=True)
+    manage_diabetes_goal = st.checkbox("Goal: Diabetes Controlled", value=True)
 
 tab1, tab2 = st.tabs(["🏥 Step 1: Doorstep Triage", "📊 Step 2: Clinician's Dashboard"])
 
@@ -313,6 +320,21 @@ with tab1:
                         st.metric("Life Years to Gain", f"{years_to_save} Yrs", delta=f"+{years_to_save}")
                     else:
                         st.metric("Life Years to Gain", "0 Yrs", delta="Optimal!")
+                
+                # --- IMPACT SIMULATOR RESULTS ---
+                target_smoker = not quit_smoking_goal
+                target_diabetes = not manage_diabetes_goal if diabetes else False
+                simulated_risk, _, simulated_status, _ = calculate_risk(age, sex, ethnicity, target_sbp, target_smoker, target_diabetes, gender_enhancers, general_enhancers)
+                
+                if simulated_risk < risk:
+                    risk_reduction = round(risk - simulated_risk, 1)
+                    st.markdown(f"""
+                        <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); padding: 15px; border-radius: 10px; margin: 15px 0; text-align: center;">
+                            <h4 style="color: white; margin: 0;">🎯 Impact Simulator Result</h4>
+                            <p style="color: white; font-size: 1.2em; margin: 10px 0;">By hitting your sidebar targets, your risk drops from <strong>{risk}%</strong> to <strong>{simulated_risk}%</strong></p>
+                            <p style="color: #e0ffe0; font-size: 1.1em; margin: 0;">That's a <strong>{risk_reduction}%</strong> absolute risk reduction!</p>
+                        </div>
+                    """, unsafe_allow_html=True)
                 
                 # Personal Goal Display
                 st.write(f"### 🎯 Your Goal: To stay healthy for **{motivation}**")
