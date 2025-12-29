@@ -49,6 +49,7 @@ def calculate_calcitrack_risk(age, sex, ethnicity, sbp, smoker, diabetes, enhanc
 # --- APP UI ---
 st.image("attached_assets/Gemini_Generated_Image_fa87vfa87vfa87vf_1767032834009.png", width=200)
 st.caption("Doorstep Cardiac Screening & Specialist Referral")
+st.caption("Invented by Sai Keerthana Cherukuri, 4th Year Medical Student")
 
 with st.sidebar:
     st.header("📋 Patient Intake")
