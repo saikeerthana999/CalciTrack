@@ -1,0 +1,106 @@
+import streamlit as st
+import folium
+from streamlit_folium import st_folium
+import urllib.parse
+
+# --- PAGE CONFIG ---
+st.set_page_config(page_title="CalciTrack India | Clinical Triage", page_icon="🧡", layout="wide")
+
+# --- RISK ENGINE WITH ENHANCERS ---
+def calculate_calcitrack_india(age, sex, sbp, smoker, diabetes, enhancers):
+    # Base logic adjusted for South Asian CAD risk
+    base_risk = (age * 0.15) + (sbp * 0.06)
+    
+    if sex == "Male": base_risk += 3.0
+    if smoker: base_risk += 7.0 
+    if diabetes: base_risk += 8.0 
+    
+    # Weighting for Risk Enhancers
+    enhancer_points = 0
+    if enhancers['premature_cad']: enhancer_points += 10.0
+    if enhancers['lp_a']: enhancer_points += 7.0
+    if enhancers['hs_crp']: enhancer_points += 4.0
+    if enhancers['ckd']: enhancer_points += 5.0
+    
+    risk_pct = round(min(max(((base_risk + enhancer_points) / 1.5) * 1.1, 1.5), 50.0), 1)
+    
+    # Triage Categories
+    if risk_pct < 5.0 and not enhancers['premature_cad']:
+        return risk_pct, "green", "LOW RISK", "Routine follow-up."
+    elif 5.0 <= risk_pct < 10.0 or enhancers['premature_cad']:
+        return risk_pct, "orange", "INTERMEDIATE (Yellow)", "Action: Recommend Calcium Score (CAC) to clarify risk."
+    else:
+        return risk_pct, "red", "HIGH RISK (Red)", "Urgent: Direct Cardiology Referral required."
+
+# --- APP UI ---
+st.title("🛡️ CalciTrack India")
+st.caption("Doorstep Cardiac Screening & Specialist Referral")
+
+with st.sidebar:
+    st.header("📋 Patient Intake")
+    age = st.number_input("Age", 18, 100, 45)
+    sex = st.radio("Biological Sex", ["Male", "Female"])
+    sbp = st.slider("Systolic BP (mmHg)", 90, 200, 130)
+    
+    st.write("---")
+    st.write("**High-Yield Risk Enhancers**")
+    smoker = st.checkbox("Smoker / Tobacco User")
+    diabetes = st.checkbox("Diabetes")
+    premature_cad = st.checkbox("Family History of Premature CAD")
+    lp_a = st.checkbox("Elevated Lp(a) (>50 mg/dL)")
+    hs_crp = st.checkbox("hs-CRP ≥ 2.0 mg/L")
+    ckd = st.checkbox("Chronic Kidney Disease (CKD)")
+    
+    enhancers = {
+        "premature_cad": premature_cad, "lp_a": lp_a, 
+        "hs_crp": hs_crp, "ckd": ckd
+    }
+    
+    calculate_btn = st.button("Generate India Triage Result", use_container_width=True)
+
+if calculate_btn:
+    risk, color, status, rec = calculate_calcitrack_india(age, sex, sbp, smoker, diabetes, enhancers)
+    v_age = age + (12 if risk > 7 else 0)
+
+    # 1. Triage Results
+    st.markdown(f"### Triage Result: :{color}[{status}]")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.metric("10-Year ASCVD Risk", f"{risk}%")
+    with col2:
+        st.metric("Vascular Age", f"{v_age} Yrs", delta=f"{v_age - age} yrs vs Bio")
+
+    # 2. THE CLINICAL NOTE (Automated)
+    active_enhancers = [k.replace('_', ' ').title() for k, v in enhancers.items() if v]
+    note = f"Patient is a {age}yo {sex} with a calculated 10-year risk of {risk}%. "
+    if active_enhancers:
+        note += f"Risk is significantly amplified by: {', '.join(active_enhancers)}. "
+    note += f"Recommended Action: {rec}"
+    
+    st.subheader("📝 Clinical Impression")
+    st.code(note, language=None)
+
+    # 3. WHATSAPP REFERRAL
+    # URL encode the clinical note for WhatsApp
+    whatsapp_msg = urllib.parse.quote(f"*CalciTrack India Referral*\n\n{note}")
+    wa_url = f"https://wa.me/?text={whatsapp_msg}"
+    
+    st.markdown(f"""
+        <a href="{wa_url}" target="_blank">
+            <button style="background-color:#25D366; color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer; font-weight:bold;">
+                📲 Share Referral via WhatsApp
+            </button>
+        </a>
+    """, unsafe_allow_value=True)
+
+    # 4. MAP
+    st.write("---")
+    st.subheader("📍 Nearest Cardiac Partners")
+    # Mumbai Coords Example
+    m = folium.Map(location=[19.0760, 72.8777], zoom_start=12)
+    folium.Marker([19.0760, 72.8777], icon=folium.Icon(color='blue', icon='truck', prefix='fa')).add_to(m)
+    st_folium(m, width=800, height=350)
+
+else:
+    st.write("👈 Fill out the doorstep intake form to assess cardiac risk.")

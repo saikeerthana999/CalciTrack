@@ -1,7 +1,8 @@
 import streamlit as st
+import urllib.parse
 
 # --- PAGE CONFIG ---
-st.set_page_config(page_title="CalciTrack India | Mobile Triage", page_icon="🧡", layout="wide")
+st.set_page_config(page_title="CalciTrack India | Clinical Triage", page_icon="🧡", layout="wide")
 
 st.markdown("""
     <style>
@@ -16,48 +17,71 @@ if 'show_results' not in st.session_state:
 if 'risk_data' not in st.session_state:
     st.session_state.risk_data = None
 
-# --- INDIAN-SPECIFIC RISK ENGINE ---
-def calculate_calcitrack_india(age, sex, sbp, smoker, diabetes, premature_cad, metabolic_syndrome):
-    # Base logic adjusted for South Asian CAD risk (starting with higher base)
+# --- RISK ENGINE WITH ENHANCERS ---
+def calculate_calcitrack_india(age, sex, ethnicity, sbp, smoker, diabetes, enhancers):
+    # Base logic adjusted for South Asian CAD risk
     base_risk = (age * 0.15) + (sbp * 0.06)
     
     if sex == "Male": base_risk += 3.0
-    if smoker: base_risk += 7.0  # Smoking/Bidi has higher impact in South Asians
-    if diabetes: base_risk += 8.0 # Higher insulin resistance weight
-    if premature_cad: base_risk += 10.0 # Critical "Secret Sauce" for Indian families
-    if metabolic_syndrome: base_risk += 5.0 # High TG, Low HDL, Central Obesity
+    if ethnicity == "South Asian / Indian": base_risk += 2.0
+    elif ethnicity == "African / African American": base_risk += 1.5
+    if smoker: base_risk += 7.0 
+    if diabetes: base_risk += 8.0 
     
-    # The "South Asian Multiplier": AHA/ACC scores are often multiplied by 1.5 for Indians
-    risk_pct = round(min(max((base_risk / 1.5) * 1.1, 1.5), 50.0), 1)
+    # Weighting for Risk Enhancers
+    enhancer_points = 0
+    if enhancers['premature_cad']: enhancer_points += 10.0
+    if enhancers['lp_a']: enhancer_points += 7.0
+    if enhancers['hs_crp']: enhancer_points += 4.0
+    if enhancers['ckd']: enhancer_points += 5.0
+    if enhancers['metabolic_syndrome']: enhancer_points += 5.0
     
-    # Triage Categories (Lowered thresholds for Indian population)
-    if risk_pct < 5.0:
-        return risk_pct, "green", "LOW RISK", "Maintain heart-healthy diet. Follow-up in 1-2 years."
-    elif 5.0 <= risk_pct < 10.0:
-        return risk_pct, "orange", "INTERMEDIATE (Yellow)", "Action: Recommend Calcium Score (CAC) or CT Coronary Angio due to South Asian risk profile."
+    risk_pct = round(min(max(((base_risk + enhancer_points) / 1.5) * 1.1, 1.5), 50.0), 1)
+    
+    # Triage Categories
+    if risk_pct < 5.0 and not enhancers['premature_cad']:
+        return risk_pct, "green", "LOW RISK", "Routine follow-up."
+    elif 5.0 <= risk_pct < 10.0 or enhancers['premature_cad']:
+        return risk_pct, "orange", "INTERMEDIATE (Yellow)", "Action: Recommend Calcium Score (CAC) to clarify risk."
     else:
-        return risk_pct, "red", "HIGH RISK (Red)", "Urgent: Direct Referral to Cardiologist. Potential for premature CAD."
+        return risk_pct, "red", "HIGH RISK (Red)", "Urgent: Direct Cardiology Referral required."
 
 # --- APP UI ---
 st.title("🛡️ CalciTrack India")
-st.subheader("Mobile Cardiac Point-of-Service Triage")
+st.caption("Doorstep Cardiac Screening & Specialist Referral")
 
 with st.sidebar:
     st.header("📋 Patient Intake")
-    age = st.number_input("Age", 18, 100, 40) # Default age lower for India
+    age = st.number_input("Age", 18, 100, 45)
     sex = st.radio("Biological Sex", ["Male", "Female"])
+    ethnicity = st.selectbox("Ethnicity", ["South Asian / Indian", "Caucasian / White", "African / African American", "East Asian", "Hispanic / Latino", "Other"])
     sbp = st.slider("Systolic BP (mmHg)", 90, 200, 130)
     
     st.write("---")
-    st.write("**India-Specific Risk Enhancers**")
-    smoker = st.checkbox("Smoker / Tobacco / Bidi User")
-    diabetes = st.checkbox("Diabetes (HbA1c > 6.5)")
-    premature_cad = st.checkbox("Family History of Early Heart Attack")
-    metabolic_syndrome = st.checkbox("Central Obesity / High Waist-to-Hip Ratio")
+    st.write("**High-Yield Risk Enhancers**")
+    smoker = st.checkbox("Smoker / Tobacco User")
+    diabetes = st.checkbox("Diabetes")
+    premature_cad = st.checkbox("Family History of Premature CAD")
+    lp_a = st.checkbox("Elevated Lp(a) (>50 mg/dL)")
+    hs_crp = st.checkbox("hs-CRP ≥ 2.0 mg/L")
+    ckd = st.checkbox("Chronic Kidney Disease (CKD)")
+    metabolic_syndrome = st.checkbox("Central Obesity / Metabolic Syndrome")
     
-    if st.button("Generate India Triage Result", use_container_width=True):
-        risk, color, status, rec = calculate_calcitrack_india(age, sex, sbp, smoker, diabetes, premature_cad, metabolic_syndrome)
-        v_age = age + (10 if risk > 5 else 0) + (10 if risk > 15 else 0)
+    enhancers = {
+        "premature_cad": premature_cad, "lp_a": lp_a, 
+        "hs_crp": hs_crp, "ckd": ckd, "metabolic_syndrome": metabolic_syndrome
+    }
+    
+    if st.button("Generate Triage Result", use_container_width=True):
+        risk, color, status, rec = calculate_calcitrack_india(age, sex, ethnicity, sbp, smoker, diabetes, enhancers)
+        v_age = age + (12 if risk > 7 else 0)
+        
+        active_enhancers = [k.replace('_', ' ').title() for k, v in enhancers.items() if v]
+        note = f"Patient is a {age}yo {sex} ({ethnicity}) with a calculated 10-year risk of {risk}%. "
+        if active_enhancers:
+            note += f"Risk is significantly amplified by: {', '.join(active_enhancers)}. "
+        note += f"Recommended Action: {rec}"
+        
         st.session_state.show_results = True
         st.session_state.risk_data = {
             'risk': risk,
@@ -65,7 +89,8 @@ with st.sidebar:
             'status': status,
             'rec': rec,
             'v_age': v_age,
-            'age': age
+            'age': age,
+            'note': note
         }
 
 # Main Dashboard Logic
@@ -77,19 +102,37 @@ if st.session_state.show_results and st.session_state.risk_data:
     rec = data['rec']
     v_age = data['v_age']
     patient_age = data['age']
+    note = data['note']
 
-    st.markdown(f"### Triage Status: :{color}[{status}]")
+    # 1. Triage Results
+    st.markdown(f"### Triage Result: :{color}[{status}]")
     
     col1, col2 = st.columns(2)
     with col1:
-        st.metric("10-Year Cardiovascular Risk", f"{risk}%")
+        st.metric("10-Year ASCVD Risk", f"{risk}%")
     with col2:
-        st.metric("Vascular Age", f"{v_age} Yrs", delta=f"{v_age - patient_age} yrs vs Bio", delta_color="inverse")
+        st.metric("Vascular Age", f"{v_age} Yrs", delta=f"{v_age - patient_age} yrs vs Bio")
 
-    st.warning(f"**Clinical Guidance for Indian Context:** {rec}")
+    st.warning(f"**Clinical Guidance:** {rec}")
+
+    # 2. THE CLINICAL NOTE (Automated)
+    st.subheader("📝 Clinical Impression")
+    st.code(note, language=None)
+
+    # 3. WHATSAPP REFERRAL
+    whatsapp_msg = urllib.parse.quote(f"*CalciTrack India Referral*\n\n{note}")
+    wa_url = f"https://wa.me/?text={whatsapp_msg}"
+    
+    st.markdown(f"""
+        <a href="{wa_url}" target="_blank">
+            <button style="background-color:#25D366; color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer; font-weight:bold;">
+                📲 Share Referral via WhatsApp
+            </button>
+        </a>
+    """, unsafe_allow_html=True)
 
 else:
     st.write("👈 Fill out the doorstep intake form to assess cardiac risk.")
 
 st.write("---")
-st.caption("Developed for Indian Clinical Context. Algorithm adjusted for South Asian premature CAD risk factors.")
+st.caption("Developed for Clinical Context. Algorithm adjusted for population-specific cardiovascular risk factors.")
