@@ -2,6 +2,55 @@ import streamlit as st
 import urllib.parse
 import pandas as pd
 from datetime import datetime
+from fpdf import FPDF
+
+def create_pdf_report(patient_name, examiner_name, exam_date, age, sex, risk, v_age, status, note, motivation):
+    pdf = FPDF()
+    pdf.add_page()
+    
+    pdf.set_font("Arial", 'B', 16)
+    pdf.set_text_color(255, 75, 75)
+    pdf.cell(200, 10, txt="CalciTrack", ln=True, align='C')
+    
+    pdf.set_font("Arial", 'I', 10)
+    pdf.set_text_color(0, 0, 0)
+    pdf.cell(200, 10, txt='"Care Ever, Neglect Never"', ln=True, align='C')
+    pdf.ln(10)
+    
+    pdf.set_font("Arial", 'B', 12)
+    pdf.cell(200, 10, txt="Heart Health Summary", ln=True, align='C')
+    pdf.ln(5)
+    
+    pdf.set_font("Arial", '', 11)
+    pdf.cell(200, 8, txt=f"Date of Examination: {exam_date}", ln=True)
+    pdf.cell(200, 8, txt=f"Patient Name: {patient_name}", ln=True)
+    pdf.cell(200, 8, txt=f"Patient Profile: {age} year old {sex}", ln=True)
+    pdf.cell(200, 8, txt=f"Primary Motivation: {motivation}", ln=True)
+    pdf.ln(5)
+    
+    pdf.set_fill_color(240, 240, 240)
+    pdf.rect(10, pdf.get_y(), 190, 30, 'F')
+    pdf.set_font("Arial", 'B', 12)
+    pdf.cell(200, 10, txt=f"10-Year Cardiovascular Risk: {risk}%", ln=True)
+    pdf.cell(200, 10, txt=f"Estimated Vascular Age: {v_age} Years", ln=True)
+    pdf.cell(200, 10, txt=f"Triage Status: {status}", ln=True)
+    pdf.ln(10)
+    
+    pdf.set_font("Arial", 'B', 12)
+    pdf.cell(200, 10, txt="Clinical Impression:", ln=True)
+    pdf.set_font("Arial", '', 11)
+    pdf.multi_cell(0, 8, txt=note)
+    pdf.ln(10)
+    
+    pdf.set_font("Arial", '', 11)
+    pdf.cell(200, 8, txt=f"Examined by: {examiner_name}", ln=True)
+    
+    pdf.ln(15)
+    pdf.set_font("Arial", 'B', 12)
+    pdf.set_text_color(255, 75, 75)
+    pdf.cell(200, 10, txt="Screen Early, Live Fully.", ln=True, align='C')
+    
+    return pdf.output(dest='S').encode('latin-1')
 
 # --- APP CONFIG ---
 st.set_page_config(page_title="CalciTrack", page_icon="🧡", layout="wide")
@@ -177,6 +226,16 @@ with tab1:
                         <p style="font-weight: bold; color: #ff4b4b;">Screen Early, Live Fully.</p>
                     </div>
                 """.format(v_age=v_age, status=status, note=note, exam_date=exam_date, patient_name=display_patient_name, examiner_name=display_examiner_name), unsafe_allow_html=True)
+                
+                # PDF Download Button
+                pdf_data = create_pdf_report(display_patient_name, display_examiner_name, exam_date, age, sex, risk, v_age, status, note, motivation)
+                st.download_button(
+                    label="📄 Download Patient Summary PDF",
+                    data=pdf_data,
+                    file_name=f"CalciTrack_{display_patient_name}_{exam_date}.pdf",
+                    mime="application/pdf",
+                    use_container_width=True
+                )
 
 with tab2:
     st.header("📈 Mobile Clinic Session Summary")
