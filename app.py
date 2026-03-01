@@ -208,6 +208,73 @@ with st.sidebar:
     quit_smoking_goal = st.checkbox("Goal: Non-Smoker", value=True)
     manage_diabetes_goal = st.checkbox("Goal: Diabetes Controlled", value=True)
 
+with st.expander("📖 How to Use CalciTrack — Step-by-Step Guide", expanded=False):
+    st.markdown("""
+### Welcome to CalciTrack!
+CalciTrack is a mobile cardiac screening and triage tool designed for the South Asian/Indian population. Follow these 4 simple steps to complete a full cardiovascular risk assessment.
+
+---
+
+### Step 1: Screening (Doorstep Triage)
+This is where you enter patient data and generate the risk report.
+
+1. **Select a Demo Patient** (optional) — Use the sidebar dropdown under "Demo Mode" to auto-fill a sample patient profile for testing.
+2. **Fill in Patient Details** — Enter the patient's name, examiner name, age, biological sex, ethnicity, and systolic blood pressure (BP).
+3. **Check Risk Enhancers** — Mark any applicable conditions:
+   - For **females**: pregnancy/hormonal history (preeclampsia, gestational diabetes, early menopause, PCOS)
+   - For **all patients**: family history of early CAD, chronic kidney disease, elevated Lp(a), high hs-CRP, metabolic syndrome, smoking, and diabetes
+4. **Enter Precision Markers** (optional) — If lab values are available, enter the Lp(a) and hs-CRP numbers for more accurate risk grading.
+5. **Click "Generate Result"** — The app will display:
+   - Your **10-Year ASCVD Risk** percentage
+   - Your **Estimated Vascular Age**
+   - A **Clinical Impression** note
+   - A **Triage Recommendation**
+   - A printable **Heart Health Summary** certificate
+   - A **PDF download** button for the full report
+   - A **WhatsApp share** button for quick referral
+
+---
+
+### Step 2: What-If Analysis
+After generating a result in Step 1, navigate to this tab to see your heart's potential.
+
+- Compares your **current vascular age** vs. your **optimized vascular age** (if you hit ideal targets: BP 120, no smoking, diabetes controlled)
+- Shows how many **years of heart health you could gain back**
+- Provides **actionable optimization tips** for BP, tobacco, and diabetes management
+
+---
+
+### Step 3: Impact Simulator
+Use the **sidebar controls** to set personalized health goals, then view results in this tab.
+
+1. **Set Goal Systolic BP** — Use the sidebar slider (110–160 mmHg) to set your target blood pressure.
+2. **Toggle Smoking Goal** — Check "Goal: Non-Smoker" if the patient plans to quit tobacco.
+3. **Toggle Diabetes Goal** — Check "Goal: Diabetes Controlled" if the patient will manage their diabetes.
+4. **View the Impact** — This tab shows a visual before/after comparison of your current risk vs. projected risk with those goals, including the absolute risk reduction percentage.
+
+---
+
+### Step 4: Clinician Dashboard
+This tab tracks all patients screened during the current session.
+
+- **Session Table** — Lists every patient screened with their date, name, age, sex, risk %, status, and examiner.
+- **Summary Metrics** — Shows total screened, high-risk count, and intermediate-risk count at a glance.
+- **Clear Session** — Use the "Clear Session Data" button to reset the dashboard for a new clinic session.
+
+---
+
+### Sidebar Quick Reference
+| Section | What It Does |
+|---|---|
+| **Demo Mode** | Load a pre-built patient profile for testing |
+| **Personal Profile** | Set motivation, diet, and sleep apnea flag |
+| **Impact Simulator** | Set health goal sliders/checkboxes for Step 3 |
+
+---
+
+*Invented by Sai Keerthana Cherukuri, 4th Year Medical Student*
+    """)
+
 tab1, tab2, tab3, tab4 = st.tabs(["🏥 Step 1: Screening", "🔮 Step 2: What-If Analysis", "🎯 Step 3: Impact Simulator", "📊 Step 4: Clinician Dashboard"])
 
 with tab1:
