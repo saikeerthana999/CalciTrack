@@ -51,3 +51,42 @@ The tool does not just give a number; it provides a destination.
 The logic is implemented in Python, using a modular approach that enables easy updates as new clinical trials (such as those for $Lp(a)$ inhibitors) are published. By keeping the code open-source, I am ensuring that this precision is **affordable and available** to any health worker with a smartphone.
 
 **Inventor:** **Sai Keerthana Cherukuri** (MS4)
+
+```mermaid
+graph TD
+    %% Node Definitions
+    A[Patient Intake]:::input
+    B{Standard ASCVD Scoring}:::decision
+    C[Calculate Base Risk %]:::process
+    D[Apply South Asian Multiplier]:::process
+    E{BMI Check}:::decision
+    F[Increase Risk Category]:::process
+    G[Maintain Risk Category]:::process
+    H{Precision Markers?}:::decision
+    I[Evaluate Lp-a & hs-CRP]:::process
+    J[PRECISION UPGRADE]:::highrisk
+    K[Final Risk Triage]:::process
+    L[Automated Referral / WhatsApp]:::output
+
+    %% Relationships
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E -- "BMI >= 23" --> F
+    E -- "BMI < 23" --> G
+    F --> H
+    G --> H
+    H -- Yes --> I
+    I -- Positive --> J
+    I -- Negative --> K
+    H -- No --> K
+    J --> L
+    K --> L
+
+    %% Styling Classes
+    classDef input fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
+    classDef decision fill:#fff9c4,stroke:#fbc02d,stroke-width:2px;
+    classDef process fill:#f5f5f5,stroke:#616161,stroke-width:1px;
+    classDef highrisk fill:#ffcdd2,stroke:#c62828,stroke-width:2px,stroke-dasharray: 5 5;
+    classDef output fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px;
