@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>"Care Ever, Neglect Never"</strong>
+  <strong></strong>
 </p>
 
 ---
