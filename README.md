@@ -1,4 +1,3 @@
-# CalciTrack: Mobile Cardiac Screening and Triage
 
 <p align="center">
   <img src="logo.png" alt="CalciTrack Logo" width="450">
@@ -8,7 +7,6 @@
  
 </p>
 
----
 
 ## The Innovation
 **CalciTrack** is a specialized clinical decision-support tool engineered to address the unique, often-hidden cardiovascular risk profiles within South Asian and Indian populations. 
