@@ -6,12 +6,14 @@
 <p align="center">
  
 </p>
-
+<p align="center">
+  
+## START EARLY, DRIVE SLOWLY, REACH SAFELY
 
 ## The Innovation
 **CalciTrack** is a specialized clinical decision-support tool engineered to address the unique, often-hidden cardiovascular risk profiles within South Asian and Indian populations. 
 
-Invented by **Sai Keerthana Cherukuri**, a 4th-year medical student (MS4), this platform bridges the gap between high-complexity clinical data and community-level accessibility. By transitioning preventative care from stationary hospitals to the "doorstep" point of service, CalciTrack ensures that geography is no longer a barrier to precision cardiology.
+Invented by **Sai Keerthana Cherukuri**, a 4th-year medical student (MS4), this platform bridges the gap between high-complexity clinical data and community-level accessibility. By transitioning preventive care from stationary hospitals to the "doorstep" point-of-service, CalciTrack ensures that geography is no longer a barrier to precision cardiology.
 
 ## Core Capabilities
 * **South Asian Adjusted Risk Engine:** Re-calibrates standard algorithms to account for the significantly higher baseline Coronary Artery Disease (CAD) risk in Asian Indian phenotypes.
@@ -36,14 +38,9 @@ South Asian populations experience premature heart disease 5–10 years earlier 
 
 ---
 
-**Author:** **Sai Keerthana Cherukuri** **Role:** MS4 Clinical Innovation Project  
+**Author:** **Sai Keerthana Cherukuri** 
+**Role:** MS4 Clinical Innovation Project  
 **Motto:** Care Ever, Neglect Never  
 
 ---
 
-##  Installation & Use
-To run the CalciTrack engine locally:
-
-1. **Clone the repository:**
-   ```bash
-   git clone [https://github.com/saikeerthana999/CalciTrack.git](https://github.com/saikeerthana999/CalciTrack.git)
