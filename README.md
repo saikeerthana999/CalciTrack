@@ -1,11 +1,11 @@
-# <p align="center">CalciTrack: Mobile Cardiac Screening and Triage</p>
+# CalciTrack: Mobile Cardiac Screening and Triage
 
 <p align="center">
   <img src="logo.png" alt="CalciTrack Logo" width="450">
 </p>
 
 <p align="center">
-  <strong></strong>
+ 
 </p>
 
 ---
