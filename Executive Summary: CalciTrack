@@ -1,0 +1,47 @@
+# CalciTrack: Mobile Cardiac Screening & Triage Engine
+### **Vision: Point-of-Service Precision Cardiology**
+**Founder:** Sai Keerthana Cherukuri (MS4)
+
+---
+
+## 🚨 The Challenge: The South Asian Cardiovascular Gap
+Traditional risk assessment tools like Framingham or SCORE are calibrated to Western cohorts, often leading to a dangerous underestimation of risk in Indian patients.
+
+| Metric | Global Average | South Asian Population |
+| :--- | :--- | :--- |
+| **Population Share** | 100% | 25% |
+| **CVD Burden** | 100% | **60%** |
+| **Risk Detection** | Standard | Often Underestimated |
+
+**The Silent Killers:** Genetic predispositions, such as elevated **Lp(a)** levels and chronic vascular inflammation (**hs-CRP**), frequently remain undetected until a major cardiac event occurs.
+
+---
+
+## The Solution: CalciTrack
+**CalciTrack** is a field-ready, mobile clinical decision-support system (CDSS) that transitions cardiac screening from stationary hospitals to the patient's doorstep. It leverages a population-specific risk engine to provide accurate triage and immediate specialist referrals.
+
+###  Core Technical & Clinical Pillars
+
+* **Localized Risk Engine:** Incorporates South Asian ethnicity modifiers and regional BMI thresholds (overweight defined at **BMI ≥ 23**).
+* **Precision Marker Reclassification:** Automatically upgrades intermediate-risk patients to high-risk if:
+    * $Lp(a) > 50\text{ mg/dL}$
+    * $hs\text{-}CRP \ge 2.0\text{ mg/L}$
+* **Female-Specific Assessment:** Integrates obstetric and gynecological history (Preeclampsia, GDM, PCOS) as independent risk enhancers.
+* **Behavioral Simulation:** Features a **"What-If" Analysis** and Impact Simulator based on AHA Life's Essential 8 to drive patient adherence.
+* **Field Deployment:** Multi-language support (English, Hindi, Telugu, Tamil) with automated WhatsApp referral sharing.
+
+---
+
+## Strategic Impact
+
+1.  **Early Detection:** Identifies "borderline" patients who would otherwise be missed by standard screening.
+2.  **Resource Optimization:** Triage logic ensures that high-value diagnostics (like **CAC Scoring**) and specialist consultations are prioritized for high-risk individuals.
+3.  **Health Equity:** Bridges the "time-to-consult" gap by putting specialist-grade logic in the hands of community health workers and mobile clinic teams.
+
+---
+
+##  Conclusion
+CalciTrack is more than a calculator; it is a life-saving bridge between the community and the cardiologist. By identifying risk before symptoms appear, we move healthcare from reactive treatment to proactive prevention.
+
+---
+*Developed by Sai Keerthana Cherukuri*
