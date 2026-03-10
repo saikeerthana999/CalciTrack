@@ -52,6 +52,7 @@ The logic is implemented in Python, using a modular approach that enables easy u
 
 **Inventor:** **Sai Keerthana Cherukuri** (MS4)
 
+## The CalciTrack Architecture and Logic
 ```mermaid
 graph TD
     %% Node Definitions
