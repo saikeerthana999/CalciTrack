@@ -1,0 +1,37 @@
+## Evidence-Based Foundation of the CalciTrack Risk Engine
+
+The following peer-reviewed studies and clinical guidelines form the evidence-based foundation of the CalciTrack risk engine. These references validate the specific modifiers and reclassification thresholds used in the tool.
+
+---
+
+### 1. Population-Specific Risk Scaling
+
+* **Volgman, A. S., et al. (2018).** *Atherosclerotic Cardiovascular Disease in South Asians in the United States: A Scientific Statement From the American Heart Association.* **Circulation.**
+    * **Key Finding:** Confirms South Asians have a higher atherosclerotic burden and identifies "South Asian" as a distinct risk-enhancing factor for early-onset CAD.
+* **Misra, A., et al. (2009).** *Consensus Statement for Diagnosis of Obesity, Abdominal Obesity and the Metabolic Syndrome for Asian Indians.* **Journal of Association of Physicians of India.**
+    * **Key Finding:** Establishes the BMI 23 threshold for being overweight in Asian Indians, noting that metabolic complications occur at lower BMI levels in this demographic.
+
+---
+
+### 2. Precision Biomarkers & Reclassification
+
+* **Wilson, D. P., et al. (2022).** *Use of Lipoprotein(a) in clinical practice: A biomarker whose time has come.* **Journal of Clinical Lipidology.**
+    * **Key Finding:** Validates the $50\text{ mg/dL}$ threshold for $Lp(a)$ as a catalyst for reclassifying patients from intermediate to high risk.
+* **Ridker, P. M., et al. (2017).** *Antiinflammatory Therapy with Canakinumab for Atherosclerotic Disease (CANTOS).* **New England Journal of Medicine.**
+    * **Key Finding:** Proves that targeting inflammation (measured by $hs-CRP \ge 2.0\text{ mg/L}$) significantly reduces cardiovascular events, supporting its use as a critical triage marker.
+
+---
+
+### 3. Guidelines for Risk Enhancers
+
+* **Grundy, S. M., et al. (2019).** *AHA/ACC/AACVPR/AAPA/ABC/ACPM/ADA/AGS/APhA/ASPC/NLA/PCNA Guideline on the Management of Blood Cholesterol.* **Journal of the American College of Cardiology.**
+    * **Key Finding:** Defines "Risk-Enhancing Factors" (including $Lp(a)$, $hs-CRP$, and family history) that favor statin initiation in intermediate-risk patients.
+* **Arnett, D. K., et al. (2019).** *ACC/AHA Guideline on the Primary Prevention of Cardiovascular Disease.* **Circulation.**
+    * **Key Finding:** Provides the framework for 10-year risk assessment and the "What-If" lifestyle intervention logic utilized in CalciTrack.
+
+---
+
+### 4. Women’s Cardiovascular Health
+
+* **Brown, H. L., et al. (2018).** *Promoting Risk Identification and Reduction of Cardiovascular Disease in Women Through Collaboration With Obstetricians and Gynecologists.* **Circulation.**
+    * **Key Finding:** Supports the integration of GDM, Preeclampsia, and PCOS as vital non-traditional risk factors in female cardiac screening.
