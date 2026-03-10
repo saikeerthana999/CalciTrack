@@ -1,0 +1,15 @@
+graph TD
+    A[Patient Intake: Age, Sex, BP, Lipids] --> B{Standard ASCVD Scoring}
+    B --> C[Calculate Base Risk %]
+    C --> D[Apply South Asian Multiplier: 1.5x - 2.0x]
+    D --> E{BMI Check}
+    E -- "BMI >= 23" --> F[Increase Risk Category]
+    E -- "BMI < 23" --> G[Maintain Risk Category]
+    F --> H{Precision Markers Available?}
+    G --> H
+    H -- Yes --> I[Evaluate Lp-a > 50 & hs-CRP >= 2.0]
+    I -- Positive --> J[PRECISION UPGRADE: Intermediate to High Risk]
+    I -- Negative --> K[Final Risk Triage]
+    H -- No --> K
+    J --> L[Automated Referral / WhatsApp Triage]
+    K --> L
