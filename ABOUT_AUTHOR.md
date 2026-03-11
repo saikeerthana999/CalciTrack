@@ -1,6 +1,8 @@
 ##  About the Developer
+
 ### Sai Keerthana Cherukuri (MS4)
 *4th Year Medical Student | Health-Tech Innovator | Community Advocate*
+
 As a medical student navigating the complexities of cardiovascular pathology, I recognized a significant gap between clinical guidelines and their practical application in South Asian communities. CalciTrack was born from the necessity to bring **precision cardiology** out of specialized clinics and into the hands of primary care providers and community health workers.
 
 **Key Focus Areas:**
