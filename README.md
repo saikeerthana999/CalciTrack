@@ -1,4 +1,8 @@
-
+<p align="center">
+  <img src="https://img.shields.io/badge/Clinical_Logic-v1.2.0-blue?style=for-the-badge&logo=mediamarkt" alt="Clinical Logic Version">
+  <img src="https://img.shields.io/badge/Status-Prototype-orange?style=for-the-badge" alt="Project Status">
+  <img src="https://img.shields.io/badge/Logic_Standard-AHA%2FACC_2024-green?style=for-the-badge" alt="AHA/ACC Standard">
+</p>
 <p align="center">
   <img src="logo.png" alt="CalciTrack Logo" width="450">
 </p>
