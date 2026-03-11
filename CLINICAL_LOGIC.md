@@ -2,6 +2,8 @@
 
 ### **Motto: Care Ever, Neglect Never**
 ### *Start Early, Drive Slowly, Reach Safely*
+**Inventor:** **Sai Keerthana Cherukuri** (MS4)
+
 
 As the inventor of CalciTrack, I designed this tool to address a specific clinical failure: underestimating cardiovascular risk in South Asian populations. This document outlines the logic I coded into the tool to move beyond standard ASCVD (Atherosclerotic Cardiovascular Disease) scoring.
 
@@ -47,12 +49,11 @@ The tool does not just give a number; it provides a destination.
 | **High (>7.5%)** | Specialist Triage | Immediate WhatsApp referral to a cardiologist. |
 ---
 
+## The CalciTrack Logic (At a Glance)
+ This flowchart represents the real-time decision-making process of the CalciTrack engine. It transitions patients from standard population risk to personalized precision triage.
+ 
 ## How I Coded This
 The logic is implemented in Python, using a modular approach that enables easy updates as new clinical trials (such as those for $Lp(a)$ inhibitors) are published. By keeping the code open-source, I am ensuring that this precision is **affordable and available** to any health worker with a smartphone.
-
-**Inventor:** **Sai Keerthana Cherukuri** (MS4)
-
-## The CalciTrack Architecture and Logic
 ```mermaid
 graph TD
     %% Node Definitions
