@@ -1,0 +1,54 @@
+/* assets/css/style.css */
+.ct-container {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: #24292e;
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.philosophy-banner {
+  background: linear-gradient(135deg, #004a99 0%, #007bb5 100%);
+  color: white;
+  padding: 35px;
+  border-radius: 12px;
+  text-align: center;
+  margin: 25px 0;
+}
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 35px 0;
+}
+.feature-card {
+  background: #ffffff;
+  border: 1px solid #e1e4e8;
+  border-radius: 10px;
+  padding: 25px;
+  border-left: 5px solid #f37021;
+}
+.nav-flex {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin: 40px 0;
+}
+.nav-btn {
+  flex: 1;
+  text-align: center;
+  padding: 18px;
+  background: #ffffff;
+  border: 1px solid #004a99;
+  border-radius: 8px;
+  text-decoration: none !important;
+  color: #004a99 !important;
+  font-weight: 600;
+}
+.nav-btn:hover {
+  background: #004a99;
+  color: white !important;
+}
+@media (max-width: 600px) {
+  .feature-grid { grid-template-columns: 1fr; }
+  .nav-flex { flex-direction: column; }
+}
