@@ -28,7 +28,7 @@ def create_pdf_report(patient_name, examiner_name, exam_date, age, sex, risk, cu
     pdf.cell(200, 10, txt="CalciTrack: Advanced Vascular Report", ln=True, align='C')
     pdf.set_font("Arial", 'I', 10)
     pdf.set_text_color(0, 0, 0)
-    pdf.cell(200, 8, txt='"Care Ever, Neglect Never"', ln=True, align='C')
+    pdf.cell(200, 8, txt='Redefining Early Cardiovascular Risk Detection', ln=True, align='C')
     pdf.ln(5)
     
     pdf.set_font("Arial", '', 11)
@@ -208,13 +208,14 @@ def get_bmi_category_sa(bmi):
 st.image("attached_assets/Gemini_Generated_Image_fa87vfa87vfa87vf_1767032834009.png", width=200)
 st.markdown("""
     <div style="text-align: center; margin: 5px 0 15px 0;">
-        <span style="font-size: 1.8em; font-weight: bold; font-style: italic; background: linear-gradient(90deg, #ff4b4b, #f5a623); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">"Care Ever, Neglect Never"</span>
+        <span style="font-size: 1.6em; font-weight: bold; font-style: italic; background: linear-gradient(90deg, #ff4b4b, #f5a623); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Redefining Early Cardiovascular Risk Detection</span>
     </div>
 """, unsafe_allow_html=True)
 st.markdown("""
     <div style="background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%); padding: 20px; border-radius: 12px; margin: 10px 0; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
         <h2 style="color: #ffffff; margin: 0; font-size: 1.5em; font-weight: 600; letter-spacing: 0.5px;">Doorstep Cardiac Screening & Specialist Referral</h2>
         <p style="color: #f5a623; margin: 10px 0 0 0; font-size: 1.1em; font-weight: 500;">Invented by Sai Keerthana Cherukuri, 4th Year Medical Student</p>
+        <p style="color: #a8d8f0; margin: 10px 0 0 0; font-size: 0.95em; font-style: italic; letter-spacing: 0.3px;">&#10077; My Philosophy: Detect Early. Stratify Precisely. Prevent Effectively. &#10078;</p>
     </div>
 """, unsafe_allow_html=True)
 
@@ -498,7 +499,7 @@ with tab1:
                 st.markdown("""
                     <div style="border: 5px solid #ff4b4b; padding: 20px; border-radius: 10px; text-align: center; background-color: white; margin-top: 20px;">
                         <h2 style="color: #ff4b4b;">CalciTrack</h2>
-                        <h4 style="font-style: italic;">"Care Ever, Neglect Never"</h4>
+                        <h4 style="font-style: italic;">Redefining Early Cardiovascular Risk Detection</h4>
                         <hr>
                         <h3>{heart_summary}</h3>
                         <p><strong>Date of Examination:</strong> {exam_date}</p>

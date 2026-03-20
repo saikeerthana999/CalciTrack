@@ -1,7 +1,7 @@
 TRANSLATIONS = {
     "English": {
         "app_title": "CalciTrack",
-        "tagline": "Care Ever, Neglect Never",
+        "tagline": "Redefining Early Cardiovascular Risk Detection",
         "subtitle": "Doorstep Cardiac Screening & Specialist Referral",
         "inventor": "Invented by Sai Keerthana Cherukuri, 4th Year Medical Student",
         "how_to_use": "How to Use CalciTrack — Step-by-Step Guide",
@@ -176,7 +176,7 @@ TRANSLATIONS = {
     },
     "Hindi": {
         "app_title": "CalciTrack",
-        "tagline": "Care Ever, Neglect Never",
+        "tagline": "Redefining Early Cardiovascular Risk Detection",
         "subtitle": "घर-घर हृदय जांच और विशेषज्ञ रेफरल",
         "inventor": "आविष्कारक: साई कीर्तना चेरुकुरी, चौथे वर्ष की मेडिकल छात्रा",
         "how_to_use": "CalciTrack कैसे उपयोग करें — चरण-दर-चरण मार्गदर्शिका",
@@ -351,7 +351,7 @@ TRANSLATIONS = {
     },
     "Telugu": {
         "app_title": "CalciTrack",
-        "tagline": "Care Ever, Neglect Never",
+        "tagline": "Redefining Early Cardiovascular Risk Detection",
         "subtitle": "ఇంటి వద్ద గుండె పరీక్ష & నిపుణుల రిఫరల్",
         "inventor": "ఆవిష్కర్త: సాయి కీర్తన చేరుకూరి, 4వ సంవత్సరం మెడికల్ విద్యార్థిని",
         "how_to_use": "CalciTrack ఎలా ఉపయోగించాలి — దశల వారీ గైడ్",
@@ -526,7 +526,7 @@ TRANSLATIONS = {
     },
     "Tamil": {
         "app_title": "CalciTrack",
-        "tagline": "Care Ever, Neglect Never",
+        "tagline": "Redefining Early Cardiovascular Risk Detection",
         "subtitle": "வீட்டு வாசல் இதய பரிசோதனை & நிபுணர் பரிந்துரை",
         "inventor": "கண்டுபிடிப்பாளர்: சாய் கீர்த்தனா செருகுரி, 4ம் ஆண்டு மருத்துவ மாணவி",
         "how_to_use": "CalciTrack பயன்படுத்துவது எப்படி — படிப்படியான வழிகாட்டி",
