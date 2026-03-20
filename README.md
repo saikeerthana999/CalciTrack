@@ -2,8 +2,8 @@
 
 <img src="attached_assets/logo_(3)_1774049373069.png" width="220" alt="CalciTrack Logo"/>
 
+# CalciTrack
 ### Redefining Early Cardiovascular Risk Detection
-
 
 *Doorstep Cardiac Screening & Specialist Referral — Engineered for South Asian Populations*
 
@@ -64,6 +64,8 @@ graph TB
     K --> M
 ```
 
+> **Not sure how to read this?** → [Plain English walkthrough — System Overview](docs/01-System-Overview.md)
+
 ---
 
 ## Clinical Algorithm
@@ -91,6 +93,8 @@ graph TD
     G --> H[Final 10-Year Risk Percent]
 ```
 
+> **Not sure how to read this?** → [Plain English walkthrough — Risk Formula Explained](docs/02-Risk-Formula-Explained.md)
+
 ### Risk Enhancers — +5.0 each
 
 | Category | Enhancers |
@@ -112,6 +116,8 @@ graph TD
     D -->|Lp-a above 50 mg-dL OR hs-CRP above 2.0 mg-L| F[HIGH UPGRADED\nCRITICAL FLAG on report\nAggressive LDL-C lowering\nFunctional stress testing\nSpecialist referral]
     D -->|Both values normal| G[INTERMEDIATE\nCAC Score recommended\nModerate statin consideration\nFollow-up 1 year]
 ```
+
+> **Not sure how to read this?** → [Plain English walkthrough — The Decision Tree Explained](docs/03-Decision-Tree-Explained.md)
 
 ### Why These Two Markers?
 
@@ -145,6 +151,8 @@ graph LR
     Standard -->|South Asian Lens Applied| CalciTrack
 ```
 
+> **Not sure how to read this?** → [Plain English walkthrough — The South Asian Lens](docs/04-South-Asian-Lens.md)
+
 ---
 
 ## 6-Step Clinical Workflow
@@ -158,6 +166,8 @@ graph LR
     S5[Step 5\nEducation\nDiet Guide\nPatient Cards] -->
     S6[Step 6\nBMI Calculator\nSouth Asian BMI\nWaist Risk]
 ```
+
+> **Not sure how to read this?** → [Plain English walkthrough — The 6-Step Clinical Workflow](docs/06-Clinical-Workflow.md)
 
 ---
 
@@ -179,6 +189,8 @@ graph LR
     I -->|No| K[Final Vascular Age]
     J --> K
 ```
+
+> **Not sure how to read this?** → [Plain English walkthrough — Vascular Age Explained](docs/05-Vascular-Age-Explained.md)
 
 **Example:** Age 45 · SBP 140 · Smoker · Diabetic
 → 45 + (140−120)×0.1 + 8 + 6 = **61 years biological vascular age**
@@ -224,10 +236,17 @@ CalciTrack/
 ├── CITATION.cff             # Academic citation file
 ├── LICENSE                  # MIT License
 ├── .gitignore               # Git ignore rules
-├── .streamlit/
-│   └── config.toml          # Streamlit server configuration
+├── push_to_github.sh        # Clean push script (no Replit metadata)
+├── docs/
+│   ├── README.md            # Documentation index
+│   ├── 01-System-Overview.md
+│   ├── 02-Risk-Formula-Explained.md
+│   ├── 03-Decision-Tree-Explained.md
+│   ├── 04-South-Asian-Lens.md
+│   ├── 05-Vascular-Age-Explained.md
+│   └── 06-Clinical-Workflow.md
 └── attached_assets/
-    └── *.png                # Logo and image assets
+    └── logo_(3)_1774049373069.png
 ```
 
 ---
