@@ -2,8 +2,8 @@
 
 <img src="attached_assets/logo_(3)_1774049373069.png" width="220" alt="CalciTrack Logo"/>
 
-# CalciTrack
 ### Redefining Early Cardiovascular Risk Detection
+
 
 *Doorstep Cardiac Screening & Specialist Referral — Engineered for South Asian Populations*
 
