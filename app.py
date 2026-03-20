@@ -362,9 +362,10 @@ CalciTrack is a mobile cardiac screening and triage tool designed for the South 
 *Invented by Sai Keerthana Cherukuri, 4th Year Medical Student*
     """)
 
-tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
     f"🏥 {t['step1']}", f"🔮 {t['step2']}", f"🎯 {t['step3']}", 
-    f"📊 {t['step4']}", f"📚 {t['step5']}", f"🧮 {t['step6']}"
+    f"📊 {t['step4']}", f"📚 {t['step5']}", f"🧮 {t['step6']}",
+    f"📐 Methodology"
 ])
 
 with tab1:
@@ -927,6 +928,318 @@ with tab6:
 | **{t['male']}** | > 102 cm | **> 90 cm** |
 | **{t['female']}** | > 88 cm | **> 80 cm** |
             """)
+
+with tab7:
+    st.markdown("## 📐 Clinical Methodology & Algorithm Logic")
+    st.markdown("*A complete walkthrough of the mathematical and clinical framework powering CalciTrack — designed for clinicians and conference evaluators.*")
+    st.markdown("---")
+
+    # ── DIAGRAM 1: The Core Formula ──────────────────────────────────────────
+    st.markdown("### 1️⃣ The Risk Scoring Formula")
+    st.markdown("""
+<div style="background: linear-gradient(135deg, #1e3a5f, #2d5a87); border-radius: 14px; padding: 28px; color: white; margin-bottom: 20px;">
+    <h4 style="color: #f5a623; text-align:center; margin-bottom: 20px; font-size:1.1em; letter-spacing:1px;">STEP-BY-STEP RISK CALCULATION</h4>
+
+    <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-bottom:18px;">
+        <div style="background:#0d2137; border:2px solid #f5a623; border-radius:10px; padding:14px 18px; text-align:center; min-width:160px;">
+            <div style="color:#a8d8f0; font-size:0.78em; margin-bottom:4px;">BASE SCORE</div>
+            <div style="font-size:1em; font-weight:bold;">(Age × 0.15)</div>
+            <div style="font-size:0.85em;">+ (SBP × 0.06)</div>
+        </div>
+        <div style="color:#f5a623; font-size:2em; align-self:center;">+</div>
+        <div style="background:#0d2137; border:2px solid #ff4b4b; border-radius:10px; padding:14px 18px; text-align:center; min-width:160px;">
+            <div style="color:#a8d8f0; font-size:0.78em; margin-bottom:4px;">DEMOGRAPHIC MODIFIERS</div>
+            <div style="font-size:0.85em;">+2.0 Male &nbsp;|&nbsp; +2.0 South Asian</div>
+            <div style="font-size:0.85em;">+1.5 African ethnicity</div>
+        </div>
+        <div style="color:#f5a623; font-size:2em; align-self:center;">+</div>
+        <div style="background:#0d2137; border:2px solid #e53935; border-radius:10px; padding:14px 18px; text-align:center; min-width:160px;">
+            <div style="color:#a8d8f0; font-size:0.78em; margin-bottom:4px;">CLINICAL RISK FACTORS</div>
+            <div style="font-size:0.85em;">+7.0 Smoker &nbsp;|&nbsp; +8.0 Diabetes</div>
+            <div style="font-size:0.85em;">+5.0 per Enhancer</div>
+        </div>
+    </div>
+
+    <div style="text-align:center; margin: 16px 0 8px 0;">
+        <span style="color:#a8d8f0; font-size:0.85em;">⬇ Apply to Total Score ⬇</span>
+    </div>
+
+    <div style="background:#0d2137; border:2px solid #2ecc71; border-radius:10px; padding:16px; text-align:center; max-width:480px; margin:0 auto;">
+        <div style="color:#2ecc71; font-size:0.82em; margin-bottom:6px;">FINAL 10-YEAR RISK %</div>
+        <div style="font-size:1.15em; font-weight:bold; color:white;">Risk % = clamp( (Total ÷ 1.5) × 1.1 )</div>
+        <div style="color:#a8d8f0; font-size:0.8em; margin-top:6px;">Minimum: 1.2% &nbsp;|&nbsp; Maximum: 50.0%</div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+    # ── DIAGRAM 2: Risk Modifiers Breakdown ───────────────────────────────────
+    st.markdown("### 2️⃣ All Risk Modifiers at a Glance")
+    col_m1, col_m2, col_m3 = st.columns(3)
+    with col_m1:
+        st.markdown("""
+<div style="background:#eaf6ff; border-top:4px solid #1e88e5; border-radius:10px; padding:16px; height:100%;">
+    <h5 style="color:#1e3a5f; margin:0 0 12px 0;">🧬 Demographic (+)</h5>
+    <div style="background:#d0eaff; border-radius:6px; padding:8px; margin:5px 0; display:flex; justify-content:space-between;"><span>Male sex</span><strong>+2.0</strong></div>
+    <div style="background:#d0eaff; border-radius:6px; padding:8px; margin:5px 0; display:flex; justify-content:space-between;"><span>South Asian</span><strong>+2.0</strong></div>
+    <div style="background:#d0eaff; border-radius:6px; padding:8px; margin:5px 0; display:flex; justify-content:space-between;"><span>African</span><strong>+1.5</strong></div>
+</div>
+""", unsafe_allow_html=True)
+    with col_m2:
+        st.markdown("""
+<div style="background:#fff8e8; border-top:4px solid #f5a623; border-radius:10px; padding:16px; height:100%;">
+    <h5 style="color:#1e3a5f; margin:0 0 12px 0;">⚠️ Major Risk Factors (+)</h5>
+    <div style="background:#fdedc9; border-radius:6px; padding:8px; margin:5px 0; display:flex; justify-content:space-between;"><span>Diabetes</span><strong>+8.0</strong></div>
+    <div style="background:#fdedc9; border-radius:6px; padding:8px; margin:5px 0; display:flex; justify-content:space-between;"><span>Smoker</span><strong>+7.0</strong></div>
+    <div style="background:#fdedc9; border-radius:6px; padding:8px; margin:5px 0; display:flex; justify-content:space-between;"><span>Age × 0.15</span><strong>variable</strong></div>
+    <div style="background:#fdedc9; border-radius:6px; padding:8px; margin:5px 0; display:flex; justify-content:space-between;"><span>SBP × 0.06</span><strong>variable</strong></div>
+</div>
+""", unsafe_allow_html=True)
+    with col_m3:
+        st.markdown("""
+<div style="background:#ffeef0; border-top:4px solid #e53935; border-radius:10px; padding:16px; height:100%;">
+    <h5 style="color:#1e3a5f; margin:0 0 12px 0;">🔬 Enhancers — each (+5.0)</h5>
+    <div style="background:#ffd6d8; border-radius:6px; padding:7px; margin:4px 0; font-size:0.88em;">♀ Preeclampsia history</div>
+    <div style="background:#ffd6d8; border-radius:6px; padding:7px; margin:4px 0; font-size:0.88em;">♀ Gestational Diabetes</div>
+    <div style="background:#ffd6d8; border-radius:6px; padding:7px; margin:4px 0; font-size:0.88em;">♀ Early Menopause</div>
+    <div style="background:#ffd6d8; border-radius:6px; padding:7px; margin:4px 0; font-size:0.88em;">♀ PCOS</div>
+    <div style="background:#ffd6d8; border-radius:6px; padding:7px; margin:4px 0; font-size:0.88em;">Family CAD / CKD</div>
+    <div style="background:#ffd6d8; border-radius:6px; padding:7px; margin:4px 0; font-size:0.88em;">Metabolic Syndrome</div>
+</div>
+""", unsafe_allow_html=True)
+
+    st.markdown("<div style='margin-top:10px'></div>", unsafe_allow_html=True)
+    st.markdown("---")
+
+    # ── DIAGRAM 3: Risk Stratification Pyramid ────────────────────────────────
+    st.markdown("### 3️⃣ Risk Stratification — The Triage Pyramid")
+    st.markdown("""
+<div style="max-width:700px; margin:0 auto;">
+
+    <div style="background:linear-gradient(135deg,#ffebee,#ffcdd2); border-left:6px solid #c62828; border-radius:10px; padding:18px 22px; margin:8px 0; text-align:center;">
+        <div style="font-size:1.4em;">🔴</div>
+        <strong style="color:#c62828; font-size:1.1em;">HIGH RISK — ≥ 19.9%</strong>
+        <p style="margin:8px 0 0 0; color:#444; font-size:0.9em;">
+            High-intensity statin therapy · Aggressive LDL-C lowering<br/>
+            Immediate Specialist Referral · Consider CAC + Stress Testing<br/>
+            <em>Follow-up: 3–6 months</em>
+        </p>
+    </div>
+
+    <div style="text-align:center; color:#888; font-size:1.5em; margin:2px 0;">▼</div>
+
+    <div style="background:linear-gradient(135deg,#fff8e1,#ffe082); border-left:6px solid #f57f17; border-radius:10px; padding:18px 22px; margin:8px 0; text-align:center;">
+        <div style="font-size:1.4em;">🟠</div>
+        <strong style="color:#e65100; font-size:1.1em;">INTERMEDIATE — 5.0% to 19.9%</strong>
+        <p style="margin:8px 0 0 0; color:#444; font-size:0.9em;">
+            CAC Scoring (Agatston) for reclassification<br/>
+            Check Lp(a) and hs-CRP — may trigger upgrade<br/>
+            Moderate statin consideration · Lifestyle intervention<br/>
+            <em>Follow-up: 1 year</em>
+        </p>
+    </div>
+
+    <div style="text-align:center; color:#888; font-size:1.5em; margin:2px 0;">▼</div>
+
+    <div style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9); border-left:6px solid #2e7d32; border-radius:10px; padding:18px 22px; margin:8px 0; text-align:center;">
+        <div style="font-size:1.4em;">🟢</div>
+        <strong style="color:#2e7d32; font-size:1.1em;">LOW RISK — &lt; 5.0%</strong>
+        <p style="margin:8px 0 0 0; color:#444; font-size:0.9em;">
+            AHA Life's Essential 8 optimization<br/>
+            Dietary + lifestyle counselling<br/>
+            No statin initiation unless other indications<br/>
+            <em>Follow-up: 3–5 years</em>
+        </p>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # ── DIAGRAM 4: Lp(a) / hs-CRP Upgrade Decision Tree ──────────────────────
+    st.markdown("### 4️⃣ Precision Upgrade Logic — The Lp(a) / hs-CRP Decision Tree")
+    st.markdown("""
+<div style="background:#f8f9fa; border-radius:14px; padding:24px; margin-bottom:20px;">
+
+    <div style="text-align:center; background:#1e3a5f; color:white; border-radius:10px; padding:14px; max-width:320px; margin:0 auto 16px auto;">
+        <strong>Patient Screened</strong><br/>
+        <span style="font-size:0.85em; color:#a8d8f0;">Risk % Calculated</span>
+    </div>
+
+    <div style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap; margin-bottom:16px;">
+        <div style="text-align:center;">
+            <div style="width:2px; height:30px; background:#888; margin:0 auto;"></div>
+            <div style="background:#2e7d32; color:white; border-radius:8px; padding:10px 20px; font-size:0.9em;"><strong>LOW &lt;5%</strong></div>
+            <div style="font-size:0.8em; color:#666; margin-top:6px;">No upgrade needed<br/>Lifestyle focus</div>
+        </div>
+        <div style="text-align:center;">
+            <div style="width:2px; height:30px; background:#888; margin:0 auto;"></div>
+            <div style="background:#e65100; color:white; border-radius:8px; padding:10px 20px; font-size:0.9em;"><strong>INTERMEDIATE 5–19.9%</strong></div>
+            <div style="background:#fff3e0; border:2px dashed #e65100; border-radius:8px; padding:10px; margin-top:10px; font-size:0.85em;">
+                <strong>Check Precision Markers:</strong><br/>
+                Lp(a) &gt; 50 mg/dL ?<br/>
+                hs-CRP ≥ 2.0 mg/L ?<br/><br/>
+                <div style="display:flex; gap:10px; justify-content:center;">
+                    <div style="background:#2e7d32; color:white; border-radius:6px; padding:6px 12px; font-size:0.85em;">NO → Stay INTERMEDIATE</div>
+                    <div style="background:#c62828; color:white; border-radius:6px; padding:6px 12px; font-size:0.85em;">YES → UPGRADE to HIGH ⚠️</div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center;">
+            <div style="width:2px; height:30px; background:#888; margin:0 auto;"></div>
+            <div style="background:#c62828; color:white; border-radius:8px; padding:10px 20px; font-size:0.9em;"><strong>HIGH ≥19.9%</strong></div>
+            <div style="font-size:0.8em; color:#666; margin-top:6px;">Already HIGH<br/>Immediate action</div>
+        </div>
+    </div>
+
+    <div style="background:#ffebee; border:2px solid #c62828; border-radius:10px; padding:14px; text-align:center; max-width:500px; margin:0 auto;">
+        <strong style="color:#c62828;">⚠️ HIGH (UPGRADED) Result</strong><br/>
+        <span style="font-size:0.88em; color:#444;">Critical flag on report · High-intensity statin · Specialist referral · Functional stress testing</span>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+    st.markdown("**Why Lp(a) and hs-CRP?**")
+    lpa_col, crp_col = st.columns(2)
+    with lpa_col:
+        st.markdown("""
+<div style="background:#eaf6ff; border-left:4px solid #1e88e5; border-radius:8px; padding:14px;">
+    <strong style="color:#1e3a5f;">Lp(a) — Lipoprotein(a)</strong><br/><br/>
+    <span style="font-size:0.9em; color:#333;">
+    • Genetically determined — cannot be reduced by diet or statins<br/>
+    • &gt;50 mg/dL independently predicts atherosclerotic events<br/>
+    • Drives plaque formation and thrombosis<br/>
+    • Especially prevalent and underdiagnosed in South Asians<br/><br/>
+    <em>Reference: Wilson DP et al., J Clin Lipidol, 2022</em>
+    </span>
+</div>
+""", unsafe_allow_html=True)
+    with crp_col:
+        st.markdown("""
+<div style="background:#fff8e8; border-left:4px solid #f5a623; border-radius:8px; padding:14px;">
+    <strong style="color:#1e3a5f;">hs-CRP — High-Sensitivity C-Reactive Protein</strong><br/><br/>
+    <span style="font-size:0.9em; color:#333;">
+    • Marker of chronic vascular inflammation<br/>
+    • ≥2.0 mg/L signals endothelial injury and instability<br/>
+    • Predicts first MI even in low-LDL patients<br/>
+    • CANTOS trial: statin benefit in elevated hs-CRP patients<br/><br/>
+    <em>Reference: Ridker PM et al., NEJM 2017 (CANTOS Trial)</em>
+    </span>
+</div>
+""", unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # ── DIAGRAM 5: South Asian Lens ───────────────────────────────────────────
+    st.markdown("### 5️⃣ The South Asian Lens — Why Standard Calculators Fall Short")
+    st.markdown("""
+<div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:20px;">
+
+    <div style="flex:1; min-width:280px; background:#f5f5f5; border-radius:12px; padding:20px;">
+        <h5 style="color:#888; text-align:center; margin:0 0 14px 0;">⚖️ Standard Calculator</h5>
+        <div style="background:#ddd; border-radius:6px; padding:10px; margin:6px 0; text-align:center; font-size:0.88em;">Framingham / SCORE / Pooled Cohort</div>
+        <div style="background:#ddd; border-radius:6px; padding:10px; margin:6px 0; font-size:0.85em;">BMI Obese ≥ 30 kg/m²</div>
+        <div style="background:#ddd; border-radius:6px; padding:10px; margin:6px 0; font-size:0.85em;">Waist Men &gt; 102 cm</div>
+        <div style="background:#ddd; border-radius:6px; padding:10px; margin:6px 0; font-size:0.85em;">Waist Women &gt; 88 cm</div>
+        <div style="background:#ddd; border-radius:6px; padding:10px; margin:6px 0; font-size:0.85em;">No ethnicity adjustment</div>
+        <div style="background:#ddd; border-radius:6px; padding:10px; margin:6px 0; font-size:0.85em;">No female enhancers</div>
+        <div style="background:#ffebee; border-radius:6px; padding:10px; margin:10px 0; font-size:0.85em; color:#c62828; text-align:center;"><strong>❌ Underestimates South Asian risk</strong></div>
+    </div>
+
+    <div style="display:flex; align-items:center; font-size:2em; color:#f5a623; padding:0 10px;">→</div>
+
+    <div style="flex:1; min-width:280px; background:linear-gradient(135deg,#1e3a5f,#2d5a87); border-radius:12px; padding:20px; color:white;">
+        <h5 style="color:#f5a623; text-align:center; margin:0 0 14px 0;">🎯 CalciTrack — South Asian Lens</h5>
+        <div style="background:#0d2137; border-radius:6px; padding:10px; margin:6px 0; text-align:center; font-size:0.88em;">Population-Adjusted Risk Engine</div>
+        <div style="background:#0d2137; border-radius:6px; padding:10px; margin:6px 0; font-size:0.85em;">BMI Obese ≥ 25 kg/m² <span style="color:#f5a623;">(WHO Asia-Pacific)</span></div>
+        <div style="background:#0d2137; border-radius:6px; padding:10px; margin:6px 0; font-size:0.85em;">Waist Men &gt; 90 cm <span style="color:#f5a623;">(IDF 2006)</span></div>
+        <div style="background:#0d2137; border-radius:6px; padding:10px; margin:6px 0; font-size:0.85em;">Waist Women &gt; 80 cm <span style="color:#f5a623;">(IDF 2006)</span></div>
+        <div style="background:#0d2137; border-radius:6px; padding:10px; margin:6px 0; font-size:0.85em;">+2.0 South Asian ethnicity modifier</div>
+        <div style="background:#0d2137; border-radius:6px; padding:10px; margin:6px 0; font-size:0.85em;">Preeclampsia / GDM / PCOS / Menopause</div>
+        <div style="background:#2ecc71; border-radius:6px; padding:10px; margin:10px 0; font-size:0.85em; color:#0d2137; text-align:center;"><strong>✅ Precision triage for South Asians</strong></div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # ── DIAGRAM 6: Vascular Age Formula ──────────────────────────────────────
+    st.markdown("### 6️⃣ Vascular Age Calculation")
+    st.markdown("""
+<div style="background:linear-gradient(135deg,#f3e5f5,#e8d5f0); border-radius:12px; padding:24px; max-width:650px; margin:0 auto 20px auto;">
+    <h5 style="color:#4a148c; text-align:center; margin:0 0 18px 0;">🫀 Your Heart's Biological Age</h5>
+
+    <div style="background:white; border-radius:10px; padding:14px; margin:8px 0; display:flex; align-items:center; gap:12px;">
+        <div style="background:#4a148c; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:bold; flex-shrink:0;">1</div>
+        <div><strong>Start with chronological age</strong><br/><span style="font-size:0.88em; color:#666;">Vascular Age = Age</span></div>
+    </div>
+    <div style="background:white; border-radius:10px; padding:14px; margin:8px 0; display:flex; align-items:center; gap:12px;">
+        <div style="background:#6a1b9a; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:bold; flex-shrink:0;">2</div>
+        <div><strong>Add blood pressure penalty</strong><br/><span style="font-size:0.88em; color:#666;">If SBP &gt; 120: + (SBP − 120) × 0.1 years</span></div>
+    </div>
+    <div style="background:white; border-radius:10px; padding:14px; margin:8px 0; display:flex; align-items:center; gap:12px;">
+        <div style="background:#8e24aa; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:bold; flex-shrink:0;">3</div>
+        <div><strong>Add smoking penalty</strong><br/><span style="font-size:0.88em; color:#666;">If smoker: + 8 years</span></div>
+    </div>
+    <div style="background:white; border-radius:10px; padding:14px; margin:8px 0; display:flex; align-items:center; gap:12px;">
+        <div style="background:#ab47bc; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:bold; flex-shrink:0;">4</div>
+        <div><strong>Add diabetes penalty</strong><br/><span style="font-size:0.88em; color:#666;">If diabetes: + 6 years</span></div>
+    </div>
+
+    <div style="background:#4a148c; color:white; border-radius:10px; padding:14px; margin-top:14px; text-align:center;">
+        <strong>Example:</strong> Age 45, SBP 140, Smoker, Diabetic<br/>
+        <span style="color:#ce93d8;">= 45 + (140−120)×0.1 + 8 + 6 = <strong style="font-size:1.1em;">61 years</strong></span>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # ── DIAGRAM 7: Full Workflow Pipeline ────────────────────────────────────
+    st.markdown("### 7️⃣ End-to-End Clinical Workflow")
+    steps_data = [
+        ("🏥", "Step 1", "Screening", "Patient intake → Risk score → Triage → PDF Report → WhatsApp Referral", "#1e88e5"),
+        ("🔮", "Step 2", "What-If Analysis", "Optimized vascular age · Life's Essential 8 checklist · Lifestyle impact", "#8e24aa"),
+        ("🎯", "Step 3", "Impact Simulator", "Set health goals → See projected risk reduction side-by-side", "#f57f17"),
+        ("📊", "Step 4", "Clinician Dashboard", "Session analytics · Risk distribution charts · CSV export for camps", "#2e7d32"),
+        ("📚", "Step 5", "Education & Diet", "Patient education cards · South Asian diet guide · Indian Heart Plate", "#e53935"),
+        ("🧮", "Step 6", "BMI Calculator", "South Asian BMI thresholds · Waist circumference risk assessment", "#00838f"),
+    ]
+    for icon, step, title, desc, color in steps_data:
+        st.markdown(f"""
+<div style="display:flex; align-items:center; gap:16px; background:white; border-left:5px solid {color}; border-radius:10px; padding:14px 18px; margin:8px 0; box-shadow:0 2px 6px rgba(0,0,0,0.07);">
+    <div style="font-size:2em;">{icon}</div>
+    <div>
+        <span style="color:{color}; font-size:0.78em; font-weight:bold; text-transform:uppercase; letter-spacing:1px;">{step}</span>
+        <div style="font-weight:bold; color:#1e3a5f; font-size:1em;">{title}</div>
+        <div style="color:#555; font-size:0.88em;">{desc}</div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # ── Evidence Table ────────────────────────────────────────────────────────
+    st.markdown("### 8️⃣ Evidence Base")
+    import pandas as pd
+    evidence_df = pd.DataFrame({
+        "Guideline / Study": [
+            "AHA/ACC 2019 Primary Prevention Guidelines",
+            "CSI Consensus Statement 2020",
+            "Wilson DP et al., J Clin Lipidol 2022",
+            "Ridker PM et al., NEJM 2017 (CANTOS)",
+            "IDF Consensus 2006",
+            "WHO Asia-Pacific BMI Guidelines"
+        ],
+        "Relevance in CalciTrack": [
+            "Core ASCVD risk framework and statin initiation thresholds",
+            "South Asian–specific CAD risk adjustment (+2.0 modifier)",
+            "Lp(a) >50 mg/dL as independent risk enhancer — upgrade rule",
+            "hs-CRP ≥2.0 mg/L and anti-inflammatory statin benefit",
+            "Waist circumference thresholds: Men >90cm, Women >80cm",
+            "BMI obesity cut-off at 25 kg/m² for South Asians"
+        ]
+    })
+    st.dataframe(evidence_df, use_container_width=True, hide_index=True)
 
 st.write("---")
 st.caption("Developed for Clinical Context. Algorithm adjusted for population-specific cardiovascular risk factors.")
