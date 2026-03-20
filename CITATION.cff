@@ -1,0 +1,45 @@
+cff-version: 1.2.0
+message: "If you use CalciTrack in your research or clinical work, please cite it as below."
+type: software
+title: "CalciTrack: South Asian–Adjusted Cardiovascular Risk Detection Tool"
+abstract: >
+  CalciTrack is a clinical decision-support application for doorstep cardiac
+  screening and specialist triage, specifically engineered for South Asian and
+  Indian populations. It integrates South Asian–adjusted risk scoring, precision
+  biomarker reclassification (Lp(a) and hs-CRP), female-specific risk enhancers,
+  and a multi-language interface for community-level deployment.
+authors:
+  - family-names: "Cherukuri"
+    given-names: "Sai Keerthana"
+    affiliation: "4th Year Medical Student (MS4)"
+    orcid: ""
+repository-code: "https://github.com/saikeerthana999/CalciTrack"
+license: MIT
+version: "1.0.0"
+date-released: "2025-01-01"
+keywords:
+  - cardiovascular risk
+  - South Asian cardiology
+  - clinical decision support
+  - preventive cardiology
+  - Lp(a)
+  - hs-CRP
+  - ASCVD
+  - risk stratification
+  - community health
+  - mobile screening
+references:
+  - type: article
+    title: "2019 ACC/AHA Guideline on the Primary Prevention of Cardiovascular Disease"
+    authors:
+      - family-names: "Arnett"
+        given-names: "D.K."
+    journal: "Circulation"
+    year: 2019
+  - type: article
+    title: "Antiinflammatory Therapy with Canakinumab for Atherosclerotic Disease (CANTOS)"
+    authors:
+      - family-names: "Ridker"
+        given-names: "P.M."
+    journal: "New England Journal of Medicine"
+    year: 2017
