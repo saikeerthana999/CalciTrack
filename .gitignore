@@ -35,6 +35,7 @@ replit.md
 .agents/
 uv.lock
 main.py
+.streamlit/
 attached_assets/image_*
 attached_assets/Pasted-*
 attached_assets/Gemini_*
