@@ -25,12 +25,14 @@ ENV/
 .env.local
 *.env
 
-# Replit
+# Replit — exclude all Replit-specific files from GitHub
 .replit
+replit.nix
+replit.md
 .upm/
 .cache/
 .local/
-replit.nix
+attached_assets/Pasted-Setup-in-Replit*
 
 # OS
 .DS_Store
