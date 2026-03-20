@@ -219,6 +219,54 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+    <div style="background: linear-gradient(135deg, #fff8f0 0%, #fff3f3 100%); border-left: 5px solid #ff4b4b; border-radius: 10px; padding: 18px 22px; margin: 16px 0 8px 0; box-shadow: 0 2px 8px rgba(255,75,75,0.08);">
+        <p style="font-size: 1.15em; color: #1e3a5f; font-style: italic; font-weight: 600; margin: 0; line-height: 1.6;">
+            "Cardiovascular disease does not begin with symptoms. It begins with risk."
+        </p>
+        <p style="font-size: 0.97em; color: #444; margin: 10px 0 0 0; line-height: 1.7;">
+            CalciTrack is built on a simple principle: risk must be <strong>identified</strong>, <strong>measured</strong>, and <strong>acted upon</strong> before it becomes disease.
+        </p>
+    </div>
+""", unsafe_allow_html=True)
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.markdown("""
+        <div style="background: #eaf6ff; border-top: 4px solid #1e88e5; border-radius: 10px; padding: 18px 16px; height: 100%; text-align: center;">
+            <div style="font-size: 2em; margin-bottom: 6px;">🔍</div>
+            <h4 style="color: #1e3a5f; margin: 0 0 8px 0; font-size: 1.05em;">Detect Early</h4>
+            <p style="color: #444; font-size: 0.88em; line-height: 1.6; margin: 0;">
+                Identify subclinical risk using population-adjusted models and advanced biomarkers such as <strong>Lp(a)</strong> and <strong>hs-CRP</strong>.
+            </p>
+        </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown("""
+        <div style="background: #fff8e8; border-top: 4px solid #f5a623; border-radius: 10px; padding: 18px 16px; height: 100%; text-align: center;">
+            <div style="font-size: 2em; margin-bottom: 6px;">🎯</div>
+            <h4 style="color: #1e3a5f; margin: 0 0 8px 0; font-size: 1.05em;">Stratify Precisely</h4>
+            <p style="color: #444; font-size: 0.88em; line-height: 1.6; margin: 0;">
+                Move beyond generalized scoring systems. Reclassify risk using <strong>South Asian–specific thresholds</strong> and individualized markers.
+            </p>
+        </div>
+    """, unsafe_allow_html=True)
+
+with col3:
+    st.markdown("""
+        <div style="background: #f0fff4; border-top: 4px solid #2e7d32; border-radius: 10px; padding: 18px 16px; height: 100%; text-align: center;">
+            <div style="font-size: 2em; margin-bottom: 6px;">🛡️</div>
+            <h4 style="color: #1e3a5f; margin: 0 0 8px 0; font-size: 1.05em;">Prevent Effectively</h4>
+            <p style="color: #444; font-size: 0.88em; line-height: 1.6; margin: 0;">
+                Translate risk into <strong>clear clinical action</strong>, enabling early intervention and reducing progression to acute events.
+            </p>
+        </div>
+    """, unsafe_allow_html=True)
+
+st.markdown("<div style='margin-top: 10px;'></div>", unsafe_allow_html=True)
+
 demo_cases = {
     "None (Manual Entry)": None,
     "1. Young Male Smoker (ED)": {"age": 42, "sex": "Male", "sbp": 135, "smoker": True, "diabetes": False, "ed": True, "f_hx": False, "pre_e": False, "gdm": False, "pcos": False, "early_m": False, "ckd": False},
