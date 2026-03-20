@@ -32,7 +32,12 @@ replit.md
 .upm/
 .cache/
 .local/
-attached_assets/Pasted-Setup-in-Replit*
+.agents/
+uv.lock
+main.py
+attached_assets/image_*
+attached_assets/Pasted-*
+attached_assets/Gemini_*
 
 # OS
 .DS_Store

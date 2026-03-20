@@ -1,7 +1,7 @@
 [project]
-name = "repl-nix-workspace"
-version = "0.1.0"
-description = "Add your description here"
+name = "calcitrack"
+version = "1.0.0"
+description = "South Asian-adjusted cardiovascular risk detection — doorstep cardiac screening and specialist referral"
 requires-python = ">=3.11"
 dependencies = [
     "folium>=0.20.0",
