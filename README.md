@@ -1,138 +1,250 @@
-<p align="center">
-  <img src="attached_assets/Gemini_Generated_Image_fa87vfa87vfa87vf_1767032834009.png" width="160" alt="CalciTrack Logo"/>
-</p>
+<div align="center">
 
-<h1 align="center">CalciTrack</h1>
-<h3 align="center">Redefining Early Cardiovascular Risk Detection</h3>
-<p align="center"><em>Doorstep Cardiac Screening &amp; Specialist Referral for South Asian Populations</em></p>
+<img src="attached_assets/Gemini_Generated_Image_fa87vfa87vfa87vf_1767032834009.png" width="150" alt="CalciTrack Logo"/>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Built%20With-Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Language-Python%203-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Languages-EN%20%7C%20HI%20%7C%20TE%20%7C%20TA-blue?style=for-the-badge"/>
-</p>
+# CalciTrack
+### Redefining Early Cardiovascular Risk Detection
 
-<p align="center">
-  Invented by <strong>Sai Keerthana Cherukuri</strong> &nbsp;|&nbsp; MS4 Clinical Innovation Project
-</p>
+*Doorstep Cardiac Screening & Specialist Referral — Engineered for South Asian Populations*
 
----
+[![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.x-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)](https://streamlit.io)
+[![License: MIT](https://img.shields.io/badge/License-MIT-22c55e?style=flat-square)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Active-22c55e?style=flat-square)]()
+[![Languages](https://img.shields.io/badge/Languages-EN%20%7C%20HI%20%7C%20TE%20%7C%20TA-6366f1?style=flat-square)]()
+[![Conference](https://img.shields.io/badge/Conference-Ready-f59e0b?style=flat-square)]()
 
-## The Problem
+<br/>
 
-> South Asian populations experience premature heart disease **5–10 years earlier** than global averages.
+**Invented by [Sai Keerthana Cherukuri](https://github.com/saikeerthana999)**
+MS4 Clinical Innovation Project
 
-Standard risk calculators — Framingham, SCORE, ASCVD Pooled Cohort — were developed primarily on Western cohorts. They **systematically underestimate risk** in South Asians, leaving a clinically significant gap in early detection.
+*"Cardiovascular disease does not begin with symptoms. It begins with risk."*
 
-**CalciTrack applies the "South Asian Lens" to identify cardiovascular risk before symptoms appear.**
+</div>
 
 ---
 
-## My Philosophy
+## 🎯 The Problem
 
-> *"Cardiovascular disease does not begin with symptoms. It begins with risk."*
+> South Asian populations develop coronary artery disease **5–10 years earlier** than Western populations — yet every major risk calculator was built on Western cohorts.
 
-CalciTrack is built on one principle: risk must be **identified**, **measured**, and **acted upon** before it becomes disease.
+The Framingham Risk Score, SCORE, and ACC/AHA Pooled Cohort Equations **systematically underestimate** cardiovascular risk in South Asians. The result: millions of preventable cardiac events.
 
-| 🔍 Detect Early | 🎯 Stratify Precisely | 🛡️ Prevent Effectively |
+**CalciTrack applies the South Asian Lens** — a population-adjusted clinical decision-support system that detects risk precisely, stratifies accurately, and enables early intervention.
+
+---
+
+## 💡 Philosophy
+
+| 🔍 **Detect Early** | 🎯 **Stratify Precisely** | 🛡️ **Prevent Effectively** |
 |:---:|:---:|:---:|
-| Identify subclinical risk using population-adjusted models and advanced biomarkers — **Lp(a)** and **hs-CRP** | Move beyond generalized scoring. Reclassify risk using **South Asian–specific thresholds** and individualized precision markers | Translate risk into **clear clinical action**, enabling early intervention before progression to acute events |
+| Identify subclinical cardiovascular risk using population-adjusted scoring and advanced biomarkers — **Lp(a)** and **hs-CRP** | Move beyond generalized calculators. Reclassify risk using **South Asian–specific thresholds** and precision biomarker logic | Translate risk scores into **clear, actionable clinical decisions** — early statin initiation, referrals, and prevention strategies |
 
 ---
 
-## The Innovation
+## 🏗️ System Architecture
 
-**CalciTrack** is a specialized clinical decision-support application that bridges high-complexity cardiology data with community-level accessibility.
+```mermaid
+graph TB
+    A[👤 Patient Data Entry] --> B[⚙️ South Asian Risk Engine]
+    B --> C{📊 10-Year Risk %}
+    C --> D[🟢 LOW < 5%]
+    C --> E[🟠 INTERMEDIATE 5–19.9%]
+    C --> F[🔴 HIGH ≥ 19.9%]
+    E --> G{🔬 Precision Markers}
+    G --> |Lp a > 50 mg/dL OR hs-CRP ≥ 2.0| H[🔴 HIGH UPGRADED]
+    G --> |Normal| I[🟠 Stay INTERMEDIATE]
+    D --> J[📋 Lifestyle Counselling + 3–5yr Follow-up]
+    I --> K[🏥 CAC Scoring + 1yr Follow-up]
+    H --> L[💊 High-Intensity Statin + Specialist Referral]
+    F --> L
+    L --> M[📄 PDF Report + WhatsApp Referral]
+    J --> M
+    K --> M
 
-By transitioning preventive care from stationary hospitals to the **"doorstep" point of service**, CalciTrack ensures that geography, language, and access are no longer barriers to precision cardiology.
+    style A fill:#1e3a5f,color:#fff
+    style B fill:#2d5a87,color:#fff
+    style D fill:#166534,color:#fff
+    style E fill:#92400e,color:#fff
+    style F fill:#991b1b,color:#fff
+    style H fill:#7f1d1d,color:#fff
+    style I fill:#78350f,color:#fff
+```
 
 ---
 
-## Core Capabilities
-
-| Feature | Description |
-|---|---|
-| 🧮 **South Asian Risk Engine** | Re-calibrates standard algorithms for the higher baseline CAD risk in Asian Indian phenotypes |
-| 🔬 **Precision Marker Upgrade** | Auto-reclassifies INTERMEDIATE → HIGH using Lp(a) >50 mg/dL or hs-CRP ≥2.0 mg/L |
-| ♀️ **Female-Specific Enhancers** | Integrates Preeclampsia, GDM, Early Menopause, and PCOS as quantified risk factors |
-| 🌍 **Multi-Language UI** | Full interface in English, Hindi, Telugu, and Tamil |
-| 📊 **Visual Risk Gauge** | SVG speedometer gauge with real-time risk color coding |
-| 📋 **PDF Clinical Reports** | Downloadable Heart Health Summary with vascular age and triage recommendations |
-| 📲 **WhatsApp Referral** | Direct specialist referral message pre-filled from the risk result |
-| 🏥 **Clinician Dashboard** | Session-level analytics, risk distribution charts, and CSV export |
-
----
-
-## Clinical Logic
+## 🧮 Clinical Algorithm
 
 ### Risk Scoring Formula
 
-```
-Base Score  =  (Age × 0.15) + (Systolic BP × 0.06)
+```mermaid
+flowchart LR
+    subgraph BASE["📐 Base Score"]
+        A1["Age × 0.15"]
+        A2["SBP × 0.06"]
+        A1 --> A3["+"]
+        A2 --> A3
+    end
 
-Modifiers:
-  + 2.0   Male sex
-  + 2.0   South Asian / Indian ethnicity
-  + 1.5   African / African American ethnicity
-  + 7.0   Current smoker / tobacco use
-  + 8.0   Diabetes mellitus
-  + 5.0   Per female-specific enhancer (Preeclampsia, GDM, Early Menopause, PCOS)
-  + 5.0   Per general enhancer (Family CAD, CKD, Lp(a)↑, hs-CRP↑, Metabolic Syndrome)
+    subgraph DEMO["🧬 Demographics"]
+        B1["+2.0 Male"]
+        B2["+2.0 South Asian"]
+        B3["+1.5 African"]
+    end
 
-Final Risk %  =  clamp( (Total Score ÷ 1.5) × 1.1,  min = 1.2%,  max = 50.0% )
-```
+    subgraph CLINICAL["⚕️ Clinical Factors"]
+        C1["+8.0 Diabetes"]
+        C2["+7.0 Smoker"]
+        C3["+5.0 per Enhancer"]
+    end
 
-### Risk Stratification
+    subgraph FINAL["📊 Final Risk"]
+        D1["Total Score"]
+        D2["÷ 1.5 × 1.1"]
+        D3["Clamp: 1.2% – 50%"]
+        D1 --> D2 --> D3
+    end
 
-| 10-Year Risk | Category | Recommended Action |
-|:---:|:---:|---|
-| < 5.0% | 🟢 **LOW** | Life's Essential 8; re-evaluate in 3–5 years |
-| 5.0 – 19.9% | 🟠 **INTERMEDIATE** | CAC Scoring (Agatston) for reclassification |
-| ≥ 19.9% | 🔴 **HIGH** | High-intensity statin; specialist referral |
-| INTERMEDIATE + Lp(a)↑ or hs-CRP↑ | 🔴 **HIGH (UPGRADED)** | Aggressive LDL-C lowering; stress testing |
-
-### Precision Marker Reclassification
-
-The key clinical innovation — applied to INTERMEDIATE-risk patients only:
-
-```
-IF  Patient is INTERMEDIATE  AND  (Lp(a) > 50 mg/dL  OR  hs-CRP ≥ 2.0 mg/L)
-THEN  Reclassify → HIGH (UPGRADED)
-      Flag → "CRITICAL: Risk upgraded due to genetic/inflammatory markers"
-      Recommend → High-intensity statin + Specialist referral
+    BASE --> FINAL
+    DEMO --> FINAL
+    CLINICAL --> FINAL
 ```
 
-> Based on: Wilson DP et al. (J Clin Lipidol, 2022) for Lp(a); Ridker PM et al. (CANTOS, NEJM 2017) for hs-CRP.
+### Risk Enhancers (+5.0 each)
 
-### South Asian–Specific Thresholds
-
-| Parameter | Standard Threshold | South Asian (CalciTrack) | Reference |
-|---|:---:|:---:|---|
-| BMI Overweight | ≥ 25 kg/m² | ≥ 23 kg/m² | WHO Asia-Pacific |
-| BMI Obese | ≥ 30 kg/m² | ≥ 25 kg/m² | WHO Asia-Pacific |
-| Waist — Men | > 102 cm | > 90 cm | IDF 2006 |
-| Waist — Women | > 88 cm | > 80 cm | IDF 2006 |
+| Category | Enhancers |
+|---|---|
+| ♀️ Female-Specific | Preeclampsia · Gestational Diabetes · Early Menopause · PCOS |
+| 🧬 Genetic / Comorbid | Family CAD · CKD · Metabolic Syndrome |
+| 🔬 Biomarker (Checkbox) | Elevated Lp(a) · Elevated hs-CRP |
 
 ---
 
-## 6-Step Workflow
+## 🔬 Precision Marker Upgrade Logic
 
+```mermaid
+flowchart TD
+    A([🩺 Patient Screened]) --> B{Risk Category?}
+
+    B --> |"< 5%"| C([🟢 LOW\nLifestyle focus\nRe-evaluate: 3–5 years])
+    B --> |"5–19.9%"| D{🔬 Check Precision Markers}
+    B --> |"≥ 19.9%"| E([🔴 HIGH\nHigh-intensity statin\nSpecialist referral\nRe-evaluate: 3–6 months])
+
+    D --> |"Lp(a) > 50 mg/dL\nOR hs-CRP ≥ 2.0 mg/L"| F([🔴 HIGH — UPGRADED ⚠️\nCRITICAL FLAG on report\nAggressive LDL-C lowering\nFunctional stress testing\nSpecialist referral])
+
+    D --> |"Lp(a) ≤ 50 AND\nhs-CRP < 2.0"| G([🟠 INTERMEDIATE\nCAC Score Agatston\nModerate statin consideration\nRe-evaluate: 1 year])
+
+    style C fill:#166534,color:#fff,stroke:#14532d
+    style E fill:#991b1b,color:#fff,stroke:#7f1d1d
+    style F fill:#7f1d1d,color:#fff,stroke:#450a0a
+    style G fill:#92400e,color:#fff,stroke:#78350f
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│  Step 1: Screening        Patient intake → Risk score → Triage      │
-│  Step 2: What-If          Vascular age + Life's Essential 8         │
-│  Step 3: Impact Simulator Set goals → Projected risk reduction      │
-│  Step 4: Clinician Dashboard Session analytics + CSV export         │
-│  Step 5: Education & Diet South Asian diet guide + Education cards  │
-│  Step 6: BMI Calculator   South Asian BMI + Waist risk assessment   │
-└─────────────────────────────────────────────────────────────────────┘
+
+### Why These Two Markers?
+
+| Marker | Threshold | Mechanism | Evidence |
+|---|:---:|---|---|
+| **Lp(a)** — Lipoprotein(a) | > 50 mg/dL | Genetically determined · Drives plaque + thrombosis · Not reduced by statins | Wilson DP et al., *J Clin Lipidol*, 2022 |
+| **hs-CRP** — High-Sensitivity CRP | ≥ 2.0 mg/L | Chronic vascular inflammation · Predicts MI even in low-LDL patients | Ridker PM et al., *NEJM*, 2017 (CANTOS) |
+
+---
+
+## 🌏 The South Asian Lens
+
+```mermaid
+graph LR
+    subgraph STANDARD["⚖️ Standard Calculators"]
+        S1["BMI Obese ≥ 30 kg/m²"]
+        S2["Waist Men > 102 cm"]
+        S3["Waist Women > 88 cm"]
+        S4["No ethnicity adjustment"]
+        S5["No female enhancers"]
+        S6["❌ Underestimates SA risk"]
+    end
+
+    subgraph CALCITRACK["🎯 CalciTrack — South Asian Lens"]
+        C1["BMI Obese ≥ 25 kg/m² ✓"]
+        C2["Waist Men > 90 cm ✓"]
+        C3["Waist Women > 80 cm ✓"]
+        C4["+2.0 South Asian modifier ✓"]
+        C5["Preeclampsia / GDM / PCOS ✓"]
+        C6["✅ Precision South Asian triage"]
+    end
+
+    STANDARD --> |"South Asian Lens Applied"| CALCITRACK
+
+    style S6 fill:#991b1b,color:#fff
+    style C6 fill:#166534,color:#fff
 ```
 
 ---
 
-## Quick Start
+## 🗺️ 6-Step Clinical Workflow
+
+```mermaid
+graph LR
+    S1["🏥 Step 1\nScreening\nRisk Score + Gauge\nPDF + WhatsApp"] -->
+    S2["🔮 Step 2\nWhat-If Analysis\nVascular Age\nLife's Essential 8"] -->
+    S3["🎯 Step 3\nImpact Simulator\nGoal-Setting\nRisk Reduction"] -->
+    S4["📊 Step 4\nClinician Dashboard\nSession Analytics\nCSV Export"] -->
+    S5["📚 Step 5\nEducation\nDiet Guide\nPatient Cards"] -->
+    S6["🧮 Step 6\nBMI Calculator\nSouth Asian BMI\nWaist Risk"]
+
+    style S1 fill:#1e3a5f,color:#fff
+    style S2 fill:#2d5a87,color:#fff
+    style S3 fill:#1e6b8a,color:#fff
+    style S4 fill:#166534,color:#fff
+    style S5 fill:#6b21a8,color:#fff
+    style S6 fill:#92400e,color:#fff
+```
+
+---
+
+## 💓 Vascular Age Calculation
+
+```mermaid
+flowchart LR
+    A["🎂 Chronological Age"] --> B["Vascular Age = Age"]
+    B --> C{"SBP > 120?"}
+    C --> |Yes| D["+ SBP−120 × 0.1 years"]
+    C --> |No| E["No change"]
+    D --> F{"Current Smoker?"}
+    E --> F
+    F --> |Yes| G["+ 8 years"]
+    F --> |No| H["No change"]
+    G --> I{"Diabetes?"}
+    H --> I
+    I --> |Yes| J["+ 6 years"]
+    I --> |No| K["= Final Vascular Age"]
+    J --> K
+
+    style K fill:#1e3a5f,color:#fff
+```
+
+**Example:** Age 45 · SBP 140 · Smoker · Diabetic
+→ 45 + (140−120)×0.1 + 8 + 6 = **61 years biological vascular age**
+
+---
+
+## ✨ Core Features
+
+| # | Feature | Description |
+|---|---|---|
+| 1 | 🌍 Multi-Language | Full UI in English, Hindi, Telugu, Tamil |
+| 2 | 📊 Visual Risk Gauge | SVG speedometer — real-time color-coded risk |
+| 3 | ✅ Life's Essential 8 | AHA interactive health checklist with scoring |
+| 4 | 🥗 South Asian Diet Guide | Food swaps, Indian Heart Plate, spice guide |
+| 5 | 🎓 Patient Education Cards | Lp(a), hs-CRP, Vascular Age, CAC, ASCVD explained simply |
+| 6 | 📈 Session Analytics | Risk distribution, age group, gender breakdown charts |
+| 7 | 📥 CSV Export | Download session screening data |
+| 8 | 📅 Follow-Up Scheduler | Auto next-screening date by risk tier |
+| 9 | 📖 Evidence Citations | AHA/ACC, CSI, CANTOS, IDF references table |
+| 10 | ⚖️ SA BMI Calculator | South Asian thresholds + waist circumference risk |
+
+---
+
+## ⚡ Quick Start
 
 ```bash
 # Clone the repository
@@ -146,72 +258,82 @@ pip install streamlit pandas fpdf
 streamlit run app.py --server.port 5000
 ```
 
+Open your browser at `http://localhost:5000`
+
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 CalciTrack/
-├── app.py                    # Main application — all 6 steps (~900 lines)
-├── translations.py           # Multi-language strings (EN / HI / TE / TA)
-├── README.md                 # Project documentation
-├── CONTRIBUTING.md           # Contributor guidelines
-├── CITATION.cff              # Academic citation file
-├── LICENSE                   # MIT License
-├── .gitignore                # Git ignore rules
-├── .streamlit/
-│   └── config.toml           # Streamlit server configuration
-└── attached_assets/
-    └── *.png                 # Logo and image assets
+├── 📄 app.py                   # Main application — all 6 steps + methodology tab
+├── 🌐 translations.py          # Multi-language strings (EN / HI / TE / TA)
+├── 📖 README.md                # This file
+├── 🤝 CONTRIBUTING.md          # Contributor guidelines
+├── 📚 CITATION.cff             # Academic citation file (CFF format)
+├── ⚖️  LICENSE                  # MIT License
+├── 🚫 .gitignore               # Git ignore rules
+├── 🔧 .streamlit/
+│   └── config.toml             # Streamlit server configuration
+└── 🖼️  attached_assets/
+    └── *.png                   # Logo and image assets
 ```
 
 ---
 
-## Evidence Base
+## 📚 Evidence Base
 
-| Reference | Relevance to CalciTrack |
-|---|---|
-| AHA/ACC 2019 Primary Prevention Guidelines | Core ASCVD risk framework and statin thresholds |
-| CSI Consensus Statement 2020 | South Asian–specific CAD risk adjustment |
-| Wilson DP et al., J Clin Lipidol 2022 | Lp(a) >50 mg/dL as independent risk enhancer |
-| Ridker PM et al., NEJM 2017 (CANTOS) | hs-CRP ≥2.0 mg/L and anti-inflammatory statin benefit |
-| IDF Consensus 2006 | South Asian waist circumference cut-offs |
-| WHO Asia-Pacific Guidelines | Revised BMI obesity thresholds for Asian populations |
+| Reference | Year | Relevance in CalciTrack |
+|---|:---:|---|
+| AHA/ACC Primary Prevention Guidelines | 2019 | Core ASCVD framework · Statin initiation thresholds |
+| CSI Consensus Statement — South Asian CVD | 2020 | South Asian CAD risk adjustment · +2.0 ethnicity modifier |
+| Wilson DP et al., *J Clin Lipidol* | 2022 | Lp(a) >50 mg/dL as independent risk enhancer |
+| Ridker PM et al., *NEJM* — CANTOS Trial | 2017 | hs-CRP ≥2.0 mg/L · Anti-inflammatory statin benefit |
+| IDF Consensus Statement | 2006 | Waist circumference: Men >90cm · Women >80cm |
+| WHO Asia-Pacific BMI Guidelines | 2004 | BMI obesity threshold ≥25 kg/m² for South Asians |
 
 ---
 
-## Vascular Age Formula
+## 🔖 Citation
 
+If you use CalciTrack in research, clinical presentations, or proceedings, please cite:
+
+```bibtex
+@software{calcitrack2025,
+  author    = {Cherukuri, Sai Keerthana},
+  title     = {CalciTrack: South Asian-Adjusted Cardiovascular Risk Detection},
+  year      = {2025},
+  url       = {https://github.com/saikeerthana999/CalciTrack},
+  license   = {MIT}
+}
 ```
-Vascular Age  =  Chronological Age
-              +  (SBP − 120) × 0.1    [if SBP > 120]
-              +  8 years               [if current smoker]
-              +  6 years               [if diabetes]
-```
+
+> Cherukuri, S.K. (2025). *CalciTrack: South Asian–Adjusted Cardiovascular Risk Detection Tool* [Software]. https://github.com/saikeerthana999/CalciTrack
 
 ---
 
-## License
+## 🤝 Contributing
 
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
-
----
-
-## Citation
-
-If you use CalciTrack in research, clinical presentations, or conference proceedings, please cite using the [CITATION.cff](CITATION.cff) file or:
-
-> Cherukuri, S.K. (2025). *CalciTrack: South Asian–Adjusted Cardiovascular Risk Detection Tool* [Software]. GitHub. https://github.com/saikeerthana999/CalciTrack
+Contributions from clinicians, researchers, and developers are welcome.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting a pull request.
 
 ---
 
-## Contributing
-
-We welcome contributions from clinicians, data scientists, and developers. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting a pull request.
+<div align="center">
 
 ---
 
-<p align="center">
-  <strong>Author:</strong> Sai Keerthana Cherukuri &nbsp;|&nbsp; MS4 Clinical Innovation Project<br/>
-  <em>Redefining Early Cardiovascular Risk Detection</em>
-</p>
+### CalciTrack
+
+*Redefining Early Cardiovascular Risk Detection*
+
+**Invented by Sai Keerthana Cherukuri · MS4 Clinical Innovation Project**
+
+[![GitHub](https://img.shields.io/badge/GitHub-saikeerthana999-181717?style=flat-square&logo=github)](https://github.com/saikeerthana999)
+[![License: MIT](https://img.shields.io/badge/License-MIT-22c55e?style=flat-square)](LICENSE)
+
+*Detect Early · Stratify Precisely · Prevent Effectively*
+
+---
+
+</div>
