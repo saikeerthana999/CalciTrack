@@ -1,3 +1,7 @@
+<div align="center">
+<img src="../attached_assets/logo_(3)_1774049373069.png" width="200" alt="CalciTrack Logo"/>
+</div>
+
 # CalciTrack — Plain English Documentation
 
 > *For clinicians, evaluators, conference attendees, and anyone who wants to understand how this tool works — without needing a mathematics degree.*

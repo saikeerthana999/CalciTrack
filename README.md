@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="attached_assets/Gemini_Generated_Image_fa87vfa87vfa87vf_1767032834009.png" width="150" alt="CalciTrack Logo"/>
+<img src="attached_assets/logo_(3)_1774049373069.png" width="220" alt="CalciTrack Logo"/>
 
 # CalciTrack
 ### Redefining Early Cardiovascular Risk Detection
