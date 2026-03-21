@@ -205,7 +205,7 @@ def get_bmi_category_sa(bmi):
     else:
         return "Obese (SA threshold)", "#f44336"
 
-st.image("attached_assets/Gemini_Generated_Image_fa87vfa87vfa87vf_1767032834009.png", width=200)
+st.image("attached_assets/logo_(3)_1774049373069.png", width=200)
 st.markdown("""
     <div style="text-align: center; margin: 5px 0 15px 0;">
         <span style="font-size: 1.6em; font-weight: bold; font-style: italic; background: linear-gradient(90deg, #ff4b4b, #f5a623); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Redefining Early Cardiovascular Risk Detection</span>
