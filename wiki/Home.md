@@ -1,3 +1,5 @@
+![CalciTrack Logo](https://raw.githubusercontent.com/saikeerthana999/CalciTrack/main/attached_assets/logo_(3)_1774049373069.png)
+
 # CalciTrack — Wiki Home
 
 **Redefining Early Cardiovascular Risk Detection**
